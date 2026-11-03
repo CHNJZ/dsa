@@ -1,0 +1,62 @@
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/language/extra/cann/extension/math_ops.py:13: FutureWarning: triton.language.extra.cann.extension.atan2 is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.atan2 instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.atan2")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/language/extra/cann/extension/math_ops.py:35: FutureWarning: triton.language.extra.cann.extension.isfinited is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.isfinited instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.isfinited")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/language/extra/cann/extension/math_ops.py:49: FutureWarning: triton.language.extra.cann.extension.finitef is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.finitef instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.finitef")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+PHASE: create inputs
+[W1102 22:09:14.130690279 op_api_common.cpp:47] Warning: The /usr/local/Ascend/cann-9.1.0/opp/vendors/custom_transformer/op_api/lib/libcust_opapi.so owner does not match current owner or the root user is using the files of a common user, will skip this file. (function operator())
+PHASE: first launch original
+PHASE: first launch completed original
+PHASE: first launch ascendc
+PHASE: first launch completed ascendc
+PHASE: first launch refactored
+PHASE: first launch completed refactored
+PHASE: timing round 0
+[2026-11-02 22:09:18] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:19] [INFO] [2078581] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220916985_ascend_pt
+|/-[2026-11-02 22:09:21] [INFO] [2078632] profiler.py: CANN profiling data parsed in a total time of 0:00:02.135584
+[2026-11-02 22:09:22] [INFO] [2078581] profiler.py: All profiling data parsed in a total time of 0:00:02.929609
+[2026-11-02 22:09:23] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:24] [INFO] [2079549] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220922527_ascend_pt
+|/-[2026-11-02 22:09:26] [INFO] [2079575] profiler.py: CANN profiling data parsed in a total time of 0:00:02.075999
+[2026-11-02 22:09:27] [INFO] [2079549] profiler.py: All profiling data parsed in a total time of 0:00:02.822248
+[2026-11-02 22:09:29] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:29] [INFO] [2080663] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220927690_ascend_pt
+|/-[2026-11-02 22:09:32] [INFO] [2080691] profiler.py: CANN profiling data parsed in a total time of 0:00:02.054511
+[2026-11-02 22:09:32] [INFO] [2080663] profiler.py: All profiling data parsed in a total time of 0:00:02.835203
+PHASE: timing round 1
+[2026-11-02 22:09:39] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:40] [INFO] [2083849] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220938390_ascend_pt
+|/-[2026-11-02 22:09:42] [INFO] [2083883] profiler.py: CANN profiling data parsed in a total time of 0:00:02.014503
+[2026-11-02 22:09:42] [INFO] [2083849] profiler.py: All profiling data parsed in a total time of 0:00:02.759510
+[2026-11-02 22:09:45] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:46] [INFO] [2086314] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220943659_ascend_pt
+|/-[2026-11-02 22:09:48] [INFO] [2086346] profiler.py: CANN profiling data parsed in a total time of 0:00:02.016504
+[2026-11-02 22:09:48] [INFO] [2086314] profiler.py: All profiling data parsed in a total time of 0:00:02.748541
+[2026-11-02 22:09:51] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:09:51] [INFO] [2088306] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102220949570_ascend_pt
+|/-[2026-11-02 22:09:53] [INFO] [2088335] profiler.py: CANN profiling data parsed in a total time of 0:00:02.014070
+[2026-11-02 22:09:54] [INFO] [2088306] profiler.py: All profiling data parsed in a total time of 0:00:02.791522
+PHASE: timing round 2
+[2026-11-02 22:10:02] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:10:02] [INFO] [2092938] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102221000637_ascend_pt
+|/-[2026-11-02 22:10:04] [INFO] [2093013] profiler.py: CANN profiling data parsed in a total time of 0:00:02.014552
+[2026-11-02 22:10:05] [INFO] [2092938] profiler.py: All profiling data parsed in a total time of 0:00:02.774362
+[2026-11-02 22:10:08] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:10:08] [INFO] [2095960] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102221006134_ascend_pt
+|/-[2026-11-02 22:10:10] [INFO] [2096002] profiler.py: CANN profiling data parsed in a total time of 0:00:02.015807
+[2026-11-02 22:10:11] [INFO] [2095960] profiler.py: All profiling data parsed in a total time of 0:00:02.787819
+[2026-11-02 22:10:13] [WARNING] [2076309] profiler.py: Incorrect schedule: Stop profiler while current state is RECORD which may result in incomplete parsed data.
+[2026-11-02 22:10:13] [INFO] [2098665] profiler.py: Start parsing profiling data in sync mode at: /home/l00898962/experiments/dsa-review-20261102/export_only_prof_dir/tbe_2076309_20261102221012068_ascend_pt
+|/-[2026-11-02 22:10:16] [INFO] [2098688] profiler.py: CANN profiling data parsed in a total time of 0:00:02.015932
+[2026-11-02 22:10:16] [INFO] [2098665] profiler.py: All profiling data parsed in a total time of 0:00:02.770024
+{"case": "prefill_b4_h16", "shape": [4, 8192, 16, 8192, 2048], "seed": 20261102, "family": "normal", "process_id": 2076309, "mode": "timing", "api_mode": "legacy", "physical_device": "1", "torch": "2.7.1+cpu", "torch_npu": "2.7.1.post7.dev20260707", "triton": "3.6.0", "triton_path": "/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/__init__.py", "config": {"module": "dsa_kernel_bn256", "bm": 16, "bn": 256, "split": 1}, "sampling_method": "per-implementation-blocks", "passed": true}

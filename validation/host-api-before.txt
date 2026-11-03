@@ -1,0 +1,110 @@
+"""Sparse MLA 的统一入口：校验形状、分配工作区、发射主核和可选 merge。"""
+import torch
+import torch_npu  # 注册 PyTorch 的 NPU 设备与 runtime。
+
+from .config import Tuning, select
+from .merge import merge_partials
+from .ragged import ragged_attention
+from .workspace import workspace_attention
+
+# 与归档中已测实现一致；没有借重构增加近似或改变编译优化策略。
+LAUNCH_OPTIONS = {
+    "sanitize_overflow": False,
+    "enable_auto_bind_sub_block": False,
+    "enable_preload": False,
+}
+
+
+def _check_inputs(q, kv, q_rope, k_rope, indices):
+    if q.ndim != 4 or kv.ndim != 4 or indices.ndim != 4:
+        raise ValueError("Q、KV 和 indices 必须是四维张量")
+    batch, queries, heads, width = q.shape
+    length = kv.shape[1]
+    topk = indices.shape[-1]
+    expected = (
+        width == 512,
+        tuple(kv.shape) == (batch, length, 1, 512),
+        tuple(q_rope.shape) == (batch, queries, heads, 64),
+        tuple(k_rope.shape) == (batch, length, 1, 64),
+        tuple(indices.shape) == (batch, queries, 1, topk),
+    )
+    if not all(expected) or min(batch, queries, heads, length, topk) <= 0:
+        raise ValueError("需要 Q[B,SQ,H,512]、KV[B,L,1,512]、RoPE64、indices[B,SQ,1,K]")
+    tensors = (q, kv, q_rope, k_rope, indices)
+    if q.device.type != "npu" or any(t.device != q.device or not t.is_contiguous() for t in tensors):
+        raise ValueError("所有输入必须位于同一 NPU，且连续存放")
+    if any(t.dtype != torch.bfloat16 for t in tensors[:4]) or indices.dtype != torch.int32:
+        raise ValueError("Q/KV/RoPE 必须为 BF16；indices 必须为 int32")
+    return batch, queries, heads, length, topk
+
+
+def _check_tuning(config, shape, cores):
+    if not isinstance(config, Tuning):
+        raise TypeError("config 必须是 dsa.Tuning")
+    _, _, heads, _, topk = shape
+    if type(cores) is not int or cores <= 0:
+        raise ValueError("cores 必须是正整数")
+    if any(type(v) is not int or v <= 0 for v in (config.bm, config.bn, config.split, config.pv_cols)):
+        raise ValueError("BM/BN/split/PV 列数必须是正整数")
+    if config.bm not in (16, 32, 64, 128) or heads % config.bm:
+        raise ValueError("BM 必须为 16/32/64/128，且整除 head 数")
+    if config.direct_nz:
+        if config.bn != 64 or topk % 64 or config.split > topk // 64:
+            raise ValueError("直接 NZ 路径需要 BN64、完整 tile 和非空 split")
+    else:
+        if config.bn not in (128, 256) or topk % (2 * config.bn * config.split):
+            raise ValueError("GM 工作区路径需要 BN128/256，每个 split 含偶数个 tile")
+        if config.pv_cols not in (128, 256, 512):
+            raise ValueError("PV 列数必须为 128/256/512")
+        if config.share_score and config.pv_cols < config.bn:
+            raise ValueError("共享 UB 必须能装下 score tile")
+
+
+def forward(q, kv, q_rope, k_rope, indices, *, config=None, cores=28, return_kernels=False):
+    """计算给定 indices 的稀疏注意力，返回 output、softmax_max、softmax_sum。
+
+    output 为 BF16 [B,SQ,H,512]；两个统计量为 FP32 [B,1,SQ,H]。
+    缩放系数固定为 1/sqrt(512+64)。重复索引保留重复权重，不会去重。
+    每个 query 至少需要一个有效索引；无效项按 [0,L) 掩码处理。
+    这不是 indexer/TopK，也不含 paged/causal 模式；不在这里扫描输入数据。
+
+    return_kernels=True 时返回 (outputs, compiled_kernels)，便于核对 IR、
+    二进制及完整的主核+merge 计时。默认调用方式只返回三个结果张量。
+    """
+    shape = _check_inputs(q, kv, q_rope, k_rope, indices)
+    config = select(shape) if config is None else config
+    _check_tuning(config, shape, cores)
+    batch, queries, heads, length, topk = shape
+    split = config.split
+
+    # 所有 gather 和分片合并均属于本次调用，没有跨调用缓存输入或结果。
+    workspace = None
+    if not config.direct_nz:
+        workspace = torch.empty((cores, 2, config.bn, 576), dtype=q.dtype, device=q.device)
+    output = torch.empty_like(q)
+    maximum = torch.empty((batch, 1, queries, heads), device=q.device, dtype=torch.float32)
+    denominator = torch.empty_like(maximum)
+    if split == 1:
+        numerator, partial_max, partial_sum = output, maximum, denominator
+    else:
+        numerator = torch.empty((batch, queries, split, heads, 512), device=q.device, dtype=torch.float32)
+        partial_max = torch.empty((batch, queries, split, heads), device=q.device, dtype=torch.float32)
+        partial_sum = torch.empty_like(partial_max)
+
+    inputs = (q, kv, q_rope, k_rope, indices)
+    outputs = (numerator, partial_max, partial_sum)
+    constants = (batch, queries, length, heads, topk, config.bm, cores, config.bn, split)
+    if config.direct_nz:
+        main = ragged_attention[(cores, )](*inputs, *outputs, *constants, **LAUNCH_OPTIONS)
+    else:
+        main = workspace_attention[(cores, )](*inputs, workspace, *outputs, *constants, config.pv_cols,
+                                              config.share_score, **LAUNCH_OPTIONS)
+    kernels = [main]
+    if split > 1:
+        # 这一步是运算的一部分；benchmark 必须包含，不能只量主核。
+        merged = merge_partials[(cores * 2, )](numerator, partial_max, partial_sum, output, maximum,
+                                               denominator, batch * queries, heads, split, cores * 2,
+                                               **LAUNCH_OPTIONS)
+        kernels.append(merged)
+    result = (output, maximum, denominator)
+    return (result, tuple(kernels)) if return_kernels else result

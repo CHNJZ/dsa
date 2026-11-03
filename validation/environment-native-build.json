@@ -1,0 +1,13 @@
+{
+  "base_commit": "0988a7ed24e68253cd3c08eac023ba3d3c9a496e",
+  "product_commit": "4a96387550889968145e01e2a66fab99f5cf9341",
+  "native_path": "/home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/_C/libtriton.so",
+  "native_sha256": "3ee2946449625633419671a34ec9207cfcf69dfa423d45ea5d14458f96a8c478",
+  "python": "3.11.15 (main, Jun 11 2026, 15:20:16) [GCC 14.3.0]",
+  "torch": "2.7.1+cpu",
+  "torch_npu": "2.7.1.post7.dev20260707",
+  "triton": "3.6.0",
+  "triton_path": "/home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/__init__.py",
+  "installation_modified": false,
+  "loading": "task-only PYTHONPATH pointing to rebuilt native library and frontend"
+}

@@ -1,0 +1,79 @@
+{
+  "method": "Specialize constexpr-only branches/expressions; normalize renamed locals and extension namespace; compare complete AST bodies with statement ordering preserved.",
+  "scope": "The five workspace specializations cover all 15 selected workspace cases. Ragged decode_b1 and merge bodies are checked separately. This is not an IR, binary, numerical or performance proof.",
+  "created_utc": "2026-11-03T01:09:08.985739+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "original": "dsa_kernel_fastgather.py",
+      "refactored": "workspace.py",
+      "bm": 128,
+      "bn": 128,
+      "pv_cols": 256,
+      "share_score": true,
+      "equivalent": true
+    },
+    {
+      "original": "dsa_kernel_wide_fastgather.py",
+      "refactored": "workspace.py",
+      "bm": 16,
+      "bn": 128,
+      "pv_cols": 512,
+      "share_score": false,
+      "equivalent": true
+    },
+    {
+      "original": "dsa_kernel_wide_fastgather.py",
+      "refactored": "workspace.py",
+      "bm": 32,
+      "bn": 128,
+      "pv_cols": 512,
+      "share_score": false,
+      "equivalent": true
+    },
+    {
+      "original": "dsa_kernel_wide_fastgather.py",
+      "refactored": "workspace.py",
+      "bm": 64,
+      "bn": 128,
+      "pv_cols": 512,
+      "share_score": false,
+      "equivalent": true
+    },
+    {
+      "original": "dsa_kernel_bn256.py",
+      "refactored": "workspace.py",
+      "bm": 16,
+      "bn": 256,
+      "pv_cols": 512,
+      "share_score": false,
+      "equivalent": true
+    },
+    {
+      "original": "dsa_kernel_ragged.py",
+      "refactored": "ragged.py",
+      "equivalent": true
+    },
+    {
+      "original": "merge.py",
+      "refactored": "merge.py",
+      "equivalent": true
+    }
+  ],
+  "source_sha256": {
+    "reference/dsa_kernel_ragged.py": "1600de167687b256404014a0bb30ee12da287b87dbf5690cc6fb145609813529",
+    "reference/merge.py": "f584183f3116aeabd17c5c973032056618282721c8e64ac542120bec1f2551a7",
+    "reference/dsa_kernel_fastgather.py": "3a92b0a638f023daf8aa165b551e324b77f629e2d07bc3d5e5aa4bfe27dab21e",
+    "reference/dsa_kernel_bn256.py": "f16584c3431dbb00932fc8326ff51115aaf25e3339303deeaed646722020bedd",
+    "reference/dsa_kernel_wide_fastgather.py": "825fcdb6749b54f8da49540433e6b85bb8777940d86946c5f1f6de4969e37ad1",
+    "reference/tla_native_ext.py": "e7f1fbaedd339b847e86d66427928eb6e7b40484c3f5043002c097614e044da6",
+    "reference/dsa_ext.py": "6184163d68803223814a46111f73c64498313b82ea89526f789aba9aaee2e7a7",
+    "dsa/merge.py": "30f27d56f35c92cdc081f3f80d510da403a06ff74bed128f7e7778959e4cc5de",
+    "dsa/config.py": "124b36eedbe45f069642eb817f0c9d7f33f4acef686886f7b2b0c5610fa7cb30",
+    "dsa/compat.py": "b89528e0ce30a375cf1c6deef6ad8302a628c6d75af05a72584f5a30492263e8",
+    "dsa/__init__.py": "56c4d85567173ac5ffe3b7f8777344ea9ffe467f804770111e4f07999cb4b0b2",
+    "dsa/ragged.py": "166693f2b5e3be856da1e57f52ab3d2f0ad1484e2f6ee409ed136fe9c54483b3",
+    "dsa/api.py": "1a3e4bcf6539eda2e1dc2b143ddbc9a11c3921e50a81014036038925c3cbfcc9",
+    "dsa/workspace.py": "02310036aed8ec9afecaff20878e4c1afa04fd300361ddf056225fe097a2eb53"
+  }
+}

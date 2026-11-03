@@ -1,0 +1,40 @@
+检查目录: /Users/xiangtic/Desktop/Code/AscendNPU-IR/build/tla/pr_dsa_interfaces_20261102
+目标仓库: triton-lang/triton-ascend
+目标分支: 0988a7ed24e68253cd3c08eac023ba3d3c9a496e
+检查所有文件: 未传参
+输出条数: 50
+详情链接: 未传参
+ci 配置地址: /Users/xiangtic/Desktop/Code/AscendNPU-IR/build/tla/pr_dsa_interfaces_20261102/.github/docs-ci/config.json
+输出 json: 未传参
+输出 json 路径: ./result.json
+
+repo 配置: 
+[文档路径匹配规则]:  ^(?!.*(?:menu|CONTRIBUTOR|MAINTAINERS)).*$
+[markdownlint：远程 markdownlint 规则配置]:  .github/docs-ci/markdownlint.config.json
+[codespell-check：单词白名单 - 远程配置]:  .github/docs-ci/codespell.whitelist.json
+[link-validity-check：远程白名单配置]:  .github/docs-ci/url.whitelist.json
+[link-validity-check：禁用外部链接检查]:  未传参
+[link-validity-check：禁用内部链接检查]:  未传参
+[link-validity-check：禁用检查锚点]:  未传参
+[link-validity-check：禁用检查仅 404 状态的链接]:  未传参
+[resource-existence-check：远程白名单配置]:  .github/docs-ci/url.whitelist.json
+[resource-existence-check：禁用外部链接检查]:  未传参
+[resource-existence-check：禁用内部链接检查]:  未传参
+[resource-existence-check：禁用仅检查 404 资源链接]:  未传参
+[toc-check：禁用 markdown 文件是否加入toc检查]:  未传参
+
+检查项：
+markdownlint
+link-validity-check
+resource-existence-check
+codespell-check
+tag-closed-check
+
+获取的文件数量：13
+检查的文件数量：2
+检查的文件：
+docs/en/triton_api_extension/tla/memory.md
+third_party/ascend/unittest/tla_ut/README.md
+
+开始检查...
+✅ 文档门禁通过！

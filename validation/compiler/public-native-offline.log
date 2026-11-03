@@ -1,0 +1,13 @@
+/home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:13: FutureWarning: triton.language.extra.cann.extension.atan2 is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.atan2 instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.atan2")
+/home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:35: FutureWarning: triton.language.extra.cann.extension.isfinited is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.isfinited instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.isfinited")
+/home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:49: FutureWarning: triton.language.extra.cann.extension.finitef is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.finitef instead.
+  @_deprecated(replacement="triton.language.extra.cann.libdevice.finitef")
+{"case": "decode_b1", "phase": "main", "prototype_ir_rewrite": false, "replacements": 0, "status": "ir_pass"}
+{"case": "decode_b1", "phase": "merge", "prototype_ir_rewrite": false, "status": "ir_pass"}
+{"case": "decode_tp8", "phase": "main", "prototype_ir_rewrite": false, "replacements": 0, "status": "ir_pass"}
+{"case": "decode_tp8", "phase": "merge", "prototype_ir_rewrite": false, "status": "ir_pass"}
+{"case": "decode_b8", "phase": "main", "prototype_ir_rewrite": false, "replacements": 0, "status": "ir_pass"}
+{"case": "decode_b8", "phase": "merge", "prototype_ir_rewrite": false, "status": "ir_pass"}
+{"case": "prefill_tp8", "phase": "main", "prototype_ir_rewrite": false, "replacements": 0, "status": "ir_pass"}

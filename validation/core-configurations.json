@@ -1,0 +1,1374 @@
+{
+  "matrix": "x/validation/timing-all16",
+  "records": [
+    {
+      "case": "decode_b1",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1833964"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "ragged_attention",
+          "OP Type": "ragged_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215629400_ascend_pt/PROF_000001_20261102215629420_01833964GNIKRBBN/mindstudio_profiler_output/op_summary_20261102215631.csv",
+          "sha256": "0414a4acd50cb15e5a464e81ee1e2f09827da2bef20aad9cf498f5f97c2345bf",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215633085_ascend_pt/PROF_000002_20261102215633104_01833964ALPJQHJK/mindstudio_profiler_output/op_summary_20261102215634.csv",
+          "sha256": "551fd8b8f85ff866d090a822f495a8817ee8e594ed243f6cf0e2cc57b3624991",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215636654_ascend_pt/PROF_000003_20261102215636673_01833964EMCRLDEM/mindstudio_profiler_output/op_summary_20261102215638.csv",
+          "sha256": "094c0cf09601301ffdce3c682cecda308dca4e3a135c691e363f99f9cda7a723",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215640298_ascend_pt/PROF_000004_20261102215640317_01833964LCMKICCK/mindstudio_profiler_output/op_summary_20261102215642.csv",
+          "sha256": "8171b13fa0aadad2b6a1924dd5e4d956b96bb0fbe33468f8712501b4505d79bc",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215643921_ascend_pt/PROF_000005_20261102215643938_01833964KMRRKOEL/mindstudio_profiler_output/op_summary_20261102215645.csv",
+          "sha256": "47a23927bbfd0b1426bb17110f561de10039a6172b692148c9f1f352f33443d4",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215647384_ascend_pt/PROF_000006_20261102215647403_01833964PHOIOHOG/mindstudio_profiler_output/op_summary_20261102215649.csv",
+          "sha256": "a86ffdb0e300d6b595ac3681c5e2e9d2df4b0a132c6b92dc4697715450fc65a7",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215650972_ascend_pt/PROF_000007_20261102215650992_01833964DHJBEJBO/mindstudio_profiler_output/op_summary_20261102215652.csv",
+          "sha256": "141efd30dc880970b43038622016c7710896230f8cc81b57d764110c73a00e4c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215654610_ascend_pt/PROF_000008_20261102215654631_01833964ELRFGODB/mindstudio_profiler_output/op_summary_20261102215656.csv",
+          "sha256": "48c0f846a379591776274a76d36d972b634e15e5f1a3b1450318353a2c47df55",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1833964_20261102215658063_ascend_pt/PROF_000009_20261102215658083_01833964QGKGGIEI/mindstudio_profiler_output/op_summary_20261102215659.csv",
+          "sha256": "4a6d2f234551bf9af249b3517a0f9497ef73f2ab7d491b7823cac9dce143454e",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1850363"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215709825_ascend_pt/PROF_000001_20261102215709845_01850363FRAKQCIP/mindstudio_profiler_output/op_summary_20261102215711.csv",
+          "sha256": "68921869f5057bb6b60ac2941888a1793b1f74697bed38bce859bc8c1fe00a89",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215713356_ascend_pt/PROF_000002_20261102215713377_01850363IGLMAHAK/mindstudio_profiler_output/op_summary_20261102215715.csv",
+          "sha256": "3a6a29e67f170ad1a7af7026acbf91e79681986471fd0dc66244c78ca58cd3fd",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215716827_ascend_pt/PROF_000003_20261102215716848_01850363JIEENIGR/mindstudio_profiler_output/op_summary_20261102215718.csv",
+          "sha256": "8aef75305a16f4870b6dd8bac7d29fe7291b79511ac7eb33162eacd240cb3514",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215720420_ascend_pt/PROF_000004_20261102215720441_01850363KDDNJICD/mindstudio_profiler_output/op_summary_20261102215722.csv",
+          "sha256": "b000a457b9485c4c95a962dd6b885abc1229c832dee9d867cf9b31e73a857aad",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215723998_ascend_pt/PROF_000005_20261102215724023_01850363OAFQQIME/mindstudio_profiler_output/op_summary_20261102215725.csv",
+          "sha256": "982e0e4dc59ff345b18a504f818aab638c528e5c3027e93b1b1a7547471842df",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215727492_ascend_pt/PROF_000006_20261102215727512_01850363FIKEDLQN/mindstudio_profiler_output/op_summary_20261102215729.csv",
+          "sha256": "0c1188f7b1af9b01a8fb11da55f7d4aed82918751afdd32e0d55d4095fa3ddc8",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215730990_ascend_pt/PROF_000007_20261102215731012_01850363NLQIMKIB/mindstudio_profiler_output/op_summary_20261102215732.csv",
+          "sha256": "d2faba1246d0ec91a59c58851411755c7cee7757a9ecbfd01d509d2167c0df87",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215734641_ascend_pt/PROF_000008_20261102215734666_01850363DDINGRML/mindstudio_profiler_output/op_summary_20261102215736.csv",
+          "sha256": "20e3d1da02bd92f3c9723e27d44479babbc827dee2f19396ffb926386f68a957",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1850363_20261102215738237_ascend_pt/PROF_000009_20261102215738259_01850363BRRPFANG/mindstudio_profiler_output/op_summary_20261102215740.csv",
+          "sha256": "036a9dc7e2482f56d0f8c0a76f90c9545ee6a40a57c32f8a17cd533f21467b7a",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1863688"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215751824_ascend_pt/PROF_000001_20261102215751848_01863688DPAAGGJG/mindstudio_profiler_output/op_summary_20261102215753.csv",
+          "sha256": "491a8dcbe03ddd0893f0808efb20cfcea191528a608eefacb0c9c84b2a708ff0",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215755504_ascend_pt/PROF_000002_20261102215755523_01863688IDKIAPPL/mindstudio_profiler_output/op_summary_20261102215757.csv",
+          "sha256": "38140ae238047661024bb7d5604415a9ea3a5c1c9ec066a98d3e525624537f1f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215759088_ascend_pt/PROF_000003_20261102215759109_01863688RJDOLMQA/mindstudio_profiler_output/op_summary_20261102215800.csv",
+          "sha256": "aef10b8be5e1e3da2fa1e6f1b54465a5b32ed4175be8614a01545d1ad89e247c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215802595_ascend_pt/PROF_000004_20261102215802614_01863688OOMJGHCD/mindstudio_profiler_output/op_summary_20261102215804.csv",
+          "sha256": "2b96272fc139a16afc86421db67f73184158a3fc51f65bc3ad528582dc10b0c1",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215806077_ascend_pt/PROF_000005_20261102215806101_01863688FJMPFIKL/mindstudio_profiler_output/op_summary_20261102215808.csv",
+          "sha256": "02970077ad1f54cd6c69a7042d7dfff7d933c430feffe868568fa497d49fbe07",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215809709_ascend_pt/PROF_000006_20261102215809729_01863688IRGERDRA/mindstudio_profiler_output/op_summary_20261102215811.csv",
+          "sha256": "abc978e02fa8da8e4eee942ea4423d9cef0224c4445a3b2cdbb4b7ad523417a7",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215813229_ascend_pt/PROF_000007_20261102215813249_01863688BJQBCCOH/mindstudio_profiler_output/op_summary_20261102215815.csv",
+          "sha256": "98767a652a0b29702c7b2e8e796b809c3019ccfaf2dfd8668540d498bd5c139b",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215816816_ascend_pt/PROF_000008_20261102215816837_01863688FGEFKLPI/mindstudio_profiler_output/op_summary_20261102215818.csv",
+          "sha256": "7380d682e0310201130c2be245255eb7feb4bff82af4fc9786065a457f726c51",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1863688_20261102215820328_ascend_pt/PROF_000009_20261102215820349_01863688IQOBDDOB/mindstudio_profiler_output/op_summary_20261102215822.csv",
+          "sha256": "974691506f14010ea29ab76a3ed408592bb9c021f3338bd9678c5026e4e97b41",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_tp8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1879118"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215831967_ascend_pt/PROF_000001_20261102215831988_01879118FGPHIPKG/mindstudio_profiler_output/op_summary_20261102215833.csv",
+          "sha256": "2efc1526412f8a3f03e6aadb4128065f273b25fb3f00508554520d0c8dc3ae07",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215835550_ascend_pt/PROF_000002_20261102215835569_01879118GABMFCKP/mindstudio_profiler_output/op_summary_20261102215837.csv",
+          "sha256": "e723f94f6e959b123d575f5873f8e14d4c85e0f02b71ceb2824a31e0a60105ee",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215839125_ascend_pt/PROF_000003_20261102215839149_01879118DQADDRPA/mindstudio_profiler_output/op_summary_20261102215841.csv",
+          "sha256": "1d42c9698608b9be21c21a14f920d9dc4d95b48c9f4b46ee3e9d765866da1e90",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215842707_ascend_pt/PROF_000004_20261102215842727_01879118BMLGOBDN/mindstudio_profiler_output/op_summary_20261102215844.csv",
+          "sha256": "2a53d1ac58ab95a689e3bfda10f0c451b9a3a388d4365a72b23d46c96f94300c",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215846075_ascend_pt/PROF_000005_20261102215846095_01879118JJAPFJNR/mindstudio_profiler_output/op_summary_20261102215847.csv",
+          "sha256": "a2f70bfdda5003c584bb2c034c6ae1070cd77b1025e78312ff97d61176249020",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215849657_ascend_pt/PROF_000006_20261102215849676_01879118ENLNCOBL/mindstudio_profiler_output/op_summary_20261102215851.csv",
+          "sha256": "1d0900494c632735f6221d0d8757ddf3cce4aeded7efaaa5d7b4dfdc5f0b47c5",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215853129_ascend_pt/PROF_000007_20261102215853155_01879118EJIHJQCG/mindstudio_profiler_output/op_summary_20261102215854.csv",
+          "sha256": "345ed8a7079153a4ada2d01cd2dbfed59d2678536d5a49cb0c76717de41c690f",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215856626_ascend_pt/PROF_000008_20261102215856647_01879118JMPDCPAP/mindstudio_profiler_output/op_summary_20261102215858.csv",
+          "sha256": "cb8e2e5f83da154222641c3f686427605219dbe1dd4970554e5fad6c145e69d8",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1879118_20261102215900101_ascend_pt/PROF_000009_20261102215900121_01879118RIJHNRRN/mindstudio_profiler_output/op_summary_20261102215902.csv",
+          "sha256": "9be32a2c25aef44e1cebdfe673b41549285d5a649f9b455b989c1eb4b335470d",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_q16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1891945"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215912076_ascend_pt/PROF_000001_20261102215912097_01891945PPIGOJQD/mindstudio_profiler_output/op_summary_20261102215913.csv",
+          "sha256": "bf98263b578fa54f317102f7d03d2c30f20e8744198cddf4bf8207e97e41f1ba",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215915685_ascend_pt/PROF_000002_20261102215915704_01891945DPLJFGME/mindstudio_profiler_output/op_summary_20261102215917.csv",
+          "sha256": "5a6dabfb868be9e90ba8a63ad4fb7c9121839a6dacf6246abfc0c9964b6d7dd0",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215919257_ascend_pt/PROF_000003_20261102215919277_01891945JBAFGAQP/mindstudio_profiler_output/op_summary_20261102215921.csv",
+          "sha256": "d83eb6deb1a732fba9de6463701fee9643b682ec635021f796034d74ff1f3f9f",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215922770_ascend_pt/PROF_000004_20261102215922792_01891945JFFQMQOD/mindstudio_profiler_output/op_summary_20261102215924.csv",
+          "sha256": "3966c8f1360b2a2c95ed7530c85ef24faac9a493a05dcfc4bb314f6d4db9d858",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215926291_ascend_pt/PROF_000005_20261102215926311_01891945KOIGCIGB/mindstudio_profiler_output/op_summary_20261102215928.csv",
+          "sha256": "07c0178483fd775792732ba287e02646e286fae7ad4b603f35ef0461c9d11337",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215929872_ascend_pt/PROF_000006_20261102215929893_01891945CIOAHMBO/mindstudio_profiler_output/op_summary_20261102215931.csv",
+          "sha256": "e20e812c1d89a5c0b10fd5cb98c0cdfd82bbd0c07b30e5e01fa10baa48d09b1f",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215933385_ascend_pt/PROF_000007_20261102215933404_01891945IEKDFNLB/mindstudio_profiler_output/op_summary_20261102215935.csv",
+          "sha256": "b28fee83893118ef40e6344f97359ffb7857034b91cf50ce54a539863122675b",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215936977_ascend_pt/PROF_000008_20261102215936997_01891945MFPBLRIG/mindstudio_profiler_output/op_summary_20261102215938.csv",
+          "sha256": "90a08b82cfede32ec6f47308311a8f8f5862084300fd4c4f5f16d274823da00c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1891945_20261102215940507_ascend_pt/PROF_000009_20261102215940527_01891945DBLEJINC/mindstudio_profiler_output/op_summary_20261102215942.csv",
+          "sha256": "742c495cc70fe99486233a0d98dc42c10bf96a1f49b302ac940bfcb26e7770d6",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_q64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1903424"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102215952283_ascend_pt/PROF_000001_20261102215952304_01903424CBPCGHMI/mindstudio_profiler_output/op_summary_20261102215954.csv",
+          "sha256": "2f846f75f1b6a83e4128d4f1f81fe181d8379e8e475f278d5970fe2426b542f7",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102215955900_ascend_pt/PROF_000002_20261102215955921_01903424MJALDANO/mindstudio_profiler_output/op_summary_20261102215957.csv",
+          "sha256": "bb8ef32aa5783bd27311e6fc1d299a2899e92111f4b21c9fb6b378f685e3a40e",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102215959514_ascend_pt/PROF_000003_20261102215959535_01903424ARJRPDCF/mindstudio_profiler_output/op_summary_20261102220001.csv",
+          "sha256": "edbb28b51f9345c226473e2730cbaa281ce4c2efc87921c093571d83e602ed89",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220004116_ascend_pt/PROF_000004_20261102220004135_01903424QDKEPLOJ/mindstudio_profiler_output/op_summary_20261102220006.csv",
+          "sha256": "128cf65f3d003b483ddfdd23d5369b5b822d79e6dd3e5f2281db777110886a96",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220007829_ascend_pt/PROF_000005_20261102220007847_01903424PFIOGGRD/mindstudio_profiler_output/op_summary_20261102220010.csv",
+          "sha256": "3ff08833363449cc934b3f5492d742ecf01732298590997f3af458214c3fc2b3",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220011740_ascend_pt/PROF_000006_20261102220011759_01903424IDBMRPIO/mindstudio_profiler_output/op_summary_20261102220013.csv",
+          "sha256": "d53f40b7437907dbc0ecd5cdf5a844ec4681ffd6f953b0ade74d62cd01fd3d9c",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220015231_ascend_pt/PROF_000007_20261102220015251_01903424JPEMAELD/mindstudio_profiler_output/op_summary_20261102220017.csv",
+          "sha256": "f701b23bff39f39970611f05210e85e33b9bd07faf5ccf8237463e55223a8a42",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220018810_ascend_pt/PROF_000008_20261102220018829_01903424ERCRGHIR/mindstudio_profiler_output/op_summary_20261102220020.csv",
+          "sha256": "9afedd5c9e861eddf5bd70f7da8f36f0974dd24b323a632af98e794f4dee9e5d",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1903424_20261102220022394_ascend_pt/PROF_000009_20261102220022414_01903424JKJKGHOP/mindstudio_profiler_output/op_summary_20261102220024.csv",
+          "sha256": "33a46863d585dc042d253d76296c301e0c3cda94b6046553bfe496decd687495",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_tp8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1915881"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220035103_ascend_pt/PROF_000001_20261102220035123_01915881KKHQGNII/mindstudio_profiler_output/op_summary_20261102220036.csv",
+          "sha256": "94a4bd96bceeee34594ed06512efa5aa387b777df06cc046b926d096625e96a0",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220038678_ascend_pt/PROF_000002_20261102220038696_01915881IEIAJROP/mindstudio_profiler_output/op_summary_20261102220040.csv",
+          "sha256": "214e22862a1e3fa6ec6c0921e48632b13261d3ce480ed269b328d900cbcaadbe",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220042151_ascend_pt/PROF_000003_20261102220042169_01915881FIBOBAJN/mindstudio_profiler_output/op_summary_20261102220044.csv",
+          "sha256": "13b885a5b2d57a60b532e1c343efe5c9284ef232d884f900338e23d42c7900ab",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220045742_ascend_pt/PROF_000004_20261102220045761_01915881EFHIQOJC/mindstudio_profiler_output/op_summary_20261102220047.csv",
+          "sha256": "dacd8aeb01b30081bef621c3f88257ea3a26edaa5a3833cbc38dbd919f5b85ce",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220049219_ascend_pt/PROF_000005_20261102220049238_01915881PHEDJOLN/mindstudio_profiler_output/op_summary_20261102220051.csv",
+          "sha256": "674b8037b0d486ce81c5ff5408025d7467615a0645116cefeeff0229a9e89e29",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220052787_ascend_pt/PROF_000006_20261102220052805_01915881GPAQCHNI/mindstudio_profiler_output/op_summary_20261102220054.csv",
+          "sha256": "4e00ca9f2737d8b46dfb3e502993793db602b93e39b378c513c4ac549e7a5f67",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220056383_ascend_pt/PROF_000007_20261102220056401_01915881DAFFEKBD/mindstudio_profiler_output/op_summary_20261102220058.csv",
+          "sha256": "9c9ae19c3cb96b6de769c92361cecb74df7ea45696fc79a69f86f84629b4967f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220059877_ascend_pt/PROF_000008_20261102220059896_01915881BGPDHNFO/mindstudio_profiler_output/op_summary_20261102220101.csv",
+          "sha256": "49b0215b409730967eba72c11b620b14fdd70a0cf027de53f6612f6b50fabb2f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1915881_20261102220103474_ascend_pt/PROF_000009_20261102220103493_01915881CJJRJCPH/mindstudio_profiler_output/op_summary_20261102220105.csv",
+          "sha256": "ea92a93fdebc31e1fbe02a9f35481ec187ad150e4e9708d5458f06973651a4f3",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_k512",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1930114"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220116306_ascend_pt/PROF_000001_20261102220116325_01930114IGFPBRLF/mindstudio_profiler_output/op_summary_20261102220118.csv",
+          "sha256": "5ff7114ea5301f64e6ee6064917c3bedb506f465cdb93a2c9cc0547cd3969bc9",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220119945_ascend_pt/PROF_000002_20261102220119965_01930114HCCMKNPQ/mindstudio_profiler_output/op_summary_20261102220121.csv",
+          "sha256": "a5cfbd0f99d9da97e619b8ad9b7c8d9b86d47afd5ed685bdd3855cc3eca1b2df",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220123516_ascend_pt/PROF_000003_20261102220123537_01930114ICQKOHFN/mindstudio_profiler_output/op_summary_20261102220125.csv",
+          "sha256": "4f6f1f2f46bde588e5a13f9a30296d8ee11ac4dddee1fcde3285cdb67b6ca4f9",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220127075_ascend_pt/PROF_000004_20261102220127095_01930114CJMOAANQ/mindstudio_profiler_output/op_summary_20261102220128.csv",
+          "sha256": "71b9822ab7736dd65daf305c80ee84fd05d02dd988da157decd971551911e864",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220130559_ascend_pt/PROF_000005_20261102220130579_01930114ENBHADHQ/mindstudio_profiler_output/op_summary_20261102220132.csv",
+          "sha256": "6fea61f555b3ed17ab47d94cb9f90b8b9d55b06c357065492af20ddf1b6c3ad6",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220135134_ascend_pt/PROF_000006_20261102220135153_01930114JPKQMNMF/mindstudio_profiler_output/op_summary_20261102220137.csv",
+          "sha256": "b2ac5210542d2952419279b938e84b9e3136471038cf14685c0adb683ef97723",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220138723_ascend_pt/PROF_000007_20261102220138741_01930114LRJDRKIB/mindstudio_profiler_output/op_summary_20261102220140.csv",
+          "sha256": "e1023495e00e75d05eec36c0af48e1831ab6e6e5e419e05273c8fd68112e8be2",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220142284_ascend_pt/PROF_000008_20261102220142305_01930114FARDLLHQ/mindstudio_profiler_output/op_summary_20261102220144.csv",
+          "sha256": "098614548ef7cf6c6c9a49ea8692c59d43c12205a0ed7c89c9a058c0e952539e",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1930114_20261102220145815_ascend_pt/PROF_000009_20261102220145834_01930114IONICNDA/mindstudio_profiler_output/op_summary_20261102220147.csv",
+          "sha256": "ebd0d4402f8b0bd9f9afbee9c0c69866f38661261aa0a19924e3daf126386816",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h128",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1940641"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220157777_ascend_pt/PROF_000001_20261102220157796_01940641RHQGMGGG/mindstudio_profiler_output/op_summary_20261102220159.csv",
+          "sha256": "d6ff72b7b40a41e6d5e21f0a1450f6ca0eb767e0949abf03ad5767bfdb468b5d",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220201352_ascend_pt/PROF_000002_20261102220201372_01940641RFIKDPOM/mindstudio_profiler_output/op_summary_20261102220203.csv",
+          "sha256": "932b85d9951701b4bc8567a0f49f3679f79aa727f3371ba5e118ffc567f5a203",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220204820_ascend_pt/PROF_000003_20261102220204839_01940641EHRLFRER/mindstudio_profiler_output/op_summary_20261102220206.csv",
+          "sha256": "7ed0c81f4502d5815b0b3c96af73c955c36ca21f1c8e4588383c9bebee0ab9a7",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220208393_ascend_pt/PROF_000004_20261102220208415_01940641QBIJDOFF/mindstudio_profiler_output/op_summary_20261102220210.csv",
+          "sha256": "927410fe99f05ec4d155017ed4fd49e77b296a87cf6224967cf36336a197b7e0",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220211868_ascend_pt/PROF_000005_20261102220211887_01940641HHHEGPOQ/mindstudio_profiler_output/op_summary_20261102220213.csv",
+          "sha256": "529653560a378b4e049f9d603e9a27290c5768a6f49fd9d57e4bd16eed50f1c1",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220215337_ascend_pt/PROF_000006_20261102220215357_01940641MLAHJOHM/mindstudio_profiler_output/op_summary_20261102220217.csv",
+          "sha256": "fa92805e6607afa12322b04314dc4e4f5e758221e0d8099d751b2f2467d3fd2e",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220218814_ascend_pt/PROF_000007_20261102220218833_01940641BQRCPKGP/mindstudio_profiler_output/op_summary_20261102220220.csv",
+          "sha256": "5d9c8b72c80348ad3085ab8ef3f3bd8b95b0e45d219c53aff865ca92518ec460",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220222385_ascend_pt/PROF_000008_20261102220222405_01940641QDNPCEEG/mindstudio_profiler_output/op_summary_20261102220224.csv",
+          "sha256": "51fff0e27076620a8fd753c5a347170a123c569ed3b99499e997e518a08b8f0d",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1940641_20261102220225767_ascend_pt/PROF_000009_20261102220225786_01940641JDGJQPLR/mindstudio_profiler_output/op_summary_20261102220227.csv",
+          "sha256": "eba56e1063b0f4a8a27e66297b0dc50bda45c54a2ea0ff2f0c2e265450c35043",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1953654"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220241128_ascend_pt/PROF_000001_20261102220241150_01953654IOEGPNQH/mindstudio_profiler_output/op_summary_20261102220243.csv",
+          "sha256": "e950abc46517a93eeae52b347b1f83e0e495a4ad50e1b9aba1507a062f8760d7",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220244752_ascend_pt/PROF_000002_20261102220244770_01953654EIODDJRL/mindstudio_profiler_output/op_summary_20261102220246.csv",
+          "sha256": "cf1a5d558a4712de0035d60d828ff795fe5d146e872700cd402b661fbda47762",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220248206_ascend_pt/PROF_000003_20261102220248224_01953654PFAFBHKH/mindstudio_profiler_output/op_summary_20261102220250.csv",
+          "sha256": "61fda8cc222b422e71e09409f94fcd70b5ecc0000ffcecb401448f77e0572c2d",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220252516_ascend_pt/PROF_000004_20261102220252535_01953654FERGRDAF/mindstudio_profiler_output/op_summary_20261102220254.csv",
+          "sha256": "11e29105ccf02481523c667d15473fdd30b091b6d1e3ee1b5eb5a95682edb4f2",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220255978_ascend_pt/PROF_000005_20261102220255999_01953654JLGJEPCC/mindstudio_profiler_output/op_summary_20261102220257.csv",
+          "sha256": "131298fb21c401ab93a7b1a47500de71c91023441237b1a6076fded93fff13fe",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220259460_ascend_pt/PROF_000006_20261102220259480_01953654OOFPFIII/mindstudio_profiler_output/op_summary_20261102220301.csv",
+          "sha256": "301d5cf0b1d9602934351e8d98878412ce2f7dcbe5539e43d0b1a138b3211e33",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220303090_ascend_pt/PROF_000007_20261102220303109_01953654NQHNNFAB/mindstudio_profiler_output/op_summary_20261102220304.csv",
+          "sha256": "6c57668cb4983fc6bae9aba6ecbfa5c6633c982cee0c36ecea7fa50af5f62b1a",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220306651_ascend_pt/PROF_000008_20261102220306674_01953654OKQCJMHR/mindstudio_profiler_output/op_summary_20261102220308.csv",
+          "sha256": "0e214bea76ecc1307df5d78fed7689ea74c8d0fe0c7757da41837b0591086fd6",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1953654_20261102220310133_ascend_pt/PROF_000009_20261102220310156_01953654HELDCNKJ/mindstudio_profiler_output/op_summary_20261102220311.csv",
+          "sha256": "0de6c0c5f11dfc708c42b2f884cca19d0a8f160ff3ca66ba04c28de56bd37cb3",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1967032"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220321202_ascend_pt/PROF_000001_20261102220321223_01967032FKMLCFIP/mindstudio_profiler_output/op_summary_20261102220323.csv",
+          "sha256": "b2608da9822b98e047f24585b9329000b7ddf15a72bb3229fdbe8c74284f6670",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220324895_ascend_pt/PROF_000002_20261102220324914_01967032CJGBHBPK/mindstudio_profiler_output/op_summary_20261102220326.csv",
+          "sha256": "353a8244622558461db3e548fb8e47c3e411d66cc15a6a298f4b48b6604240cf",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220328471_ascend_pt/PROF_000003_20261102220328491_01967032BOJAHCDM/mindstudio_profiler_output/op_summary_20261102220330.csv",
+          "sha256": "2c29811ea4ffabe690f3a4664f9eba91e5f3b3658d1bcc584fa01c843713985c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220332051_ascend_pt/PROF_000004_20261102220332071_01967032LHIRHPRG/mindstudio_profiler_output/op_summary_20261102220333.csv",
+          "sha256": "65d6393248c2c87cc9c5e49f194da77b034bfad381c4397d0d155d7b4373dd7c",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220335655_ascend_pt/PROF_000005_20261102220335675_01967032GEKBMNMN/mindstudio_profiler_output/op_summary_20261102220337.csv",
+          "sha256": "c042393b82089fff1aa3e083e421c2d9e21a2fdb816dce1f89c7be651577fcfd",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220339573_ascend_pt/PROF_000006_20261102220339594_01967032HIQIBLQG/mindstudio_profiler_output/op_summary_20261102220341.csv",
+          "sha256": "e8da5761d81b25702b5e1ad192d99127bb658a67919774bea4d68dbbbe219e4c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220343218_ascend_pt/PROF_000007_20261102220343237_01967032FKDNDCPN/mindstudio_profiler_output/op_summary_20261102220345.csv",
+          "sha256": "8a47c923c492e1388951022675891d13ada42903507dd2e72696af720330df86",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220346905_ascend_pt/PROF_000008_20261102220346925_01967032NEMHERPA/mindstudio_profiler_output/op_summary_20261102220349.csv",
+          "sha256": "7e2b1220aa89bf5144cb9309e5caf3145cf35376aacaf1a4a2f5cc29c7743775",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1967032_20261102220351100_ascend_pt/PROF_000009_20261102220351119_01967032HBQAHFCL/mindstudio_profiler_output/op_summary_20261102220352.csv",
+          "sha256": "da12f5f49b927f916f01c7e61e97572820210ec9530f4caa8b8d7bdf5edcc104",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1981918"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220402848_ascend_pt/PROF_000001_20261102220402870_01981918RABPRRHJ/mindstudio_profiler_output/op_summary_20261102220405.csv",
+          "sha256": "cac9f024f054e4f486a0dc3442830194d6a8b52f712bcb3d8a3b7b7c394acea7",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220406809_ascend_pt/PROF_000002_20261102220406828_01981918NIHAIENP/mindstudio_profiler_output/op_summary_20261102220408.csv",
+          "sha256": "ab5f2776e01bfbb58f7fb575179815538437acdb4abfff0cd2d7b78dfe558d7a",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220410366_ascend_pt/PROF_000003_20261102220410386_01981918QMLQFACG/mindstudio_profiler_output/op_summary_20261102140412.csv",
+          "sha256": "91f906d5320bab43d8787cf6ddd9807e1e766538ebd28d7db16c2a0961f36452",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220413932_ascend_pt/PROF_000004_20261102220413952_01981918PFBDBGFI/mindstudio_profiler_output/op_summary_20261102220415.csv",
+          "sha256": "bd8cef6076be1d902dfb9b8b10c5a1d5e4e1ed88e3d8be43f9dddacc06995188",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220417293_ascend_pt/PROF_000005_20261102220417312_01981918GLGHJRMB/mindstudio_profiler_output/op_summary_20261102220419.csv",
+          "sha256": "da9cd7f7dbdc835c8726d825039432d78625d96feeebdc1d26c9cc212975d951",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220420757_ascend_pt/PROF_000006_20261102220420776_01981918LMHIFMEN/mindstudio_profiler_output/op_summary_20261102220422.csv",
+          "sha256": "19d6b8b976d0bd3208350b5eb0e0680d9b3bfa962809ce13eb285c6ba2cc1a96",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220424366_ascend_pt/PROF_000007_20261102220424385_01981918MCMGQGNF/mindstudio_profiler_output/op_summary_20261102220426.csv",
+          "sha256": "10aadfb98c09c95f844a0e435f058866086e5be5c31a7841b67c3f1fd3b4790c",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220427931_ascend_pt/PROF_000008_20261102220427951_01981918CDLKRLBR/mindstudio_profiler_output/op_summary_20261102220429.csv",
+          "sha256": "57692a8a1964d5fc2d1ba82369e64ff860d7f1abc537700966d74ff7bf7ce156",
+          "matching_rows": 40
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1981918_20261102220431511_ascend_pt/PROF_000009_20261102220431532_01981918PJGQNQHO/mindstudio_profiler_output/op_summary_20261102220433.csv",
+          "sha256": "142941a7cea8626f725bf7297f1ab642ee65894cfef4e7f86844b0b988e590aa",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h128",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "1995861"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220457370_ascend_pt/PROF_000001_20261102220457378_01995861LNCLERJE/mindstudio_profiler_output/op_summary_20261102220501.csv",
+          "sha256": "d00a571b9761cfa1584930d4f958ce1ce0b0c7611ac1749bd112bafe21964a9f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220503980_ascend_pt/PROF_000002_20261102220504005_01995861FHABMCRJ/mindstudio_profiler_output/op_summary_20261102220508.csv",
+          "sha256": "07d26cf30b3b5b0e36735e8b73927016c74c0c1cbfc77e8a49156eacdb8a415b",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220510397_ascend_pt/PROF_000003_20261102220510411_01995861QDDPKJNA/mindstudio_profiler_output/op_summary_20261102220514.csv",
+          "sha256": "c09feef6ce91f5dffa0840ed3120d4c9e2e0b71666baa7efd7365d4fca8fd107",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220525095_ascend_pt/PROF_000004_20261102220525110_01995861FORFRFRJ/mindstudio_profiler_output/op_summary_20261102220529.csv",
+          "sha256": "daf447e52bf03fe27c50947fbb02f80646e849ff43c17c46f4f083f63aa17bc8",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220531413_ascend_pt/PROF_000005_20261102220531428_01995861MOAGIMRB/mindstudio_profiler_output/op_summary_20261102220536.csv",
+          "sha256": "f696fb7c2d59ad417f8ae04a0c9b85e061676adc256d4722efcff063265fbc86",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220538361_ascend_pt/PROF_000006_20261102220538376_01995861ILMLNMLE/mindstudio_profiler_output/op_summary_20261102220543.csv",
+          "sha256": "417cf62051900f0516c9999cf379045e674be04eddc4ad8248d56f1878b606c9",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220553835_ascend_pt/PROF_000007_20261102220553850_01995861OLJAPHMD/mindstudio_profiler_output/op_summary_20261102220558.csv",
+          "sha256": "445f758ebcd75534502226a1fad6047ee8f915af3a5e9af64f2b8793a5aaadde",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220600891_ascend_pt/PROF_000008_20261102220600907_01995861BEMKCALG/mindstudio_profiler_output/op_summary_20261102220606.csv",
+          "sha256": "16bdb36acaed10929ee111d6622a800cb8c8226a3ff3a64457fe3d60923c5328",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_1995861_20261102220608082_ascend_pt/PROF_000009_20261102220608096_01995861PRAOEDNQ/mindstudio_profiler_output/op_summary_20261102220612.csv",
+          "sha256": "e67cf27d847a8aa7801adad08878717f39e8f20cb853f5daeef7f931c48818ef",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "2029665"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220638191_ascend_pt/PROF_000001_20261102220638200_02029665AOKRLMAO/mindstudio_profiler_output/op_summary_20261102220642.csv",
+          "sha256": "5395a6b2f58cff745cdfebf6b6d1995c51b4bfdb6249ff16771881deb777edd2",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220644107_ascend_pt/PROF_000002_20261102220644123_02029665OBGAQLCC/mindstudio_profiler_output/op_summary_20261102220647.csv",
+          "sha256": "7d6d2f83cf4b912e0a655284192e0177c01ab43b5fbebc18d2a9ee876acb377d",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220649408_ascend_pt/PROF_000003_20261102220649425_02029665EOQAIEAA/mindstudio_profiler_output/op_summary_20261102220653.csv",
+          "sha256": "9cb002520fb7b314b6a6c40ec3ca54ee96a80cbe2907cef012e11a1bcd1a439e",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220701067_ascend_pt/PROF_000004_20261102220701090_02029665IIOOHGQA/mindstudio_profiler_output/op_summary_20261102220704.csv",
+          "sha256": "7c42cd88c6b1a4c9129522061ff047c442f7bd5f33e5377aeb7dc7cde38b9468",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220706422_ascend_pt/PROF_000005_20261102220706437_02029665NOLFKCIG/mindstudio_profiler_output/op_summary_20261102220710.csv",
+          "sha256": "e5e8b24124f223d61a74f2d725159b23dbc99a508dc9105782d97ff882986822",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220712545_ascend_pt/PROF_000006_20261102220712560_02029665AJPPACHN/mindstudio_profiler_output/op_summary_20261102220716.csv",
+          "sha256": "609200ec2ba91bd71783f1f5515817d47ae5ece326a3b34c598dd62d535b30df",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220724551_ascend_pt/PROF_000007_20261102220724578_02029665CGFGINKH/mindstudio_profiler_output/op_summary_20261102220728.csv",
+          "sha256": "394b3a506554fde2fa19f364fa601e1f85bf3bfa57a18a71b598ab7bc44dc26f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220730594_ascend_pt/PROF_000008_20261102220730609_02029665ODFGLBBK/mindstudio_profiler_output/op_summary_20261102220734.csv",
+          "sha256": "7d20085b43e7598cc43acad69168f1104ca785f4077231892f9be96d3c16d80f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2029665_20261102220736594_ascend_pt/PROF_000009_20261102220736608_02029665IDOIEHJO/mindstudio_profiler_output/op_summary_20261102220740.csv",
+          "sha256": "ad3b73fa8cd335f6054b4538aef797d21f60fb8c48535cd5692e74f9b7c5c8e5",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "2056266"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220800773_ascend_pt/PROF_000001_20261102220800781_02056266RKFMQABI/mindstudio_profiler_output/op_summary_20261102220804.csv",
+          "sha256": "63b5177d80bdd57334d0e5f62c6ff7d4dc4870afc151bd70fb5f8661eb054e26",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220806488_ascend_pt/PROF_000002_20261102220806504_02056266IGANAKJN/mindstudio_profiler_output/op_summary_20261102220809.csv",
+          "sha256": "70f8f50aab6e98ae789c693f9358d911f257960f8b985dd3cb6f90d3b7ef1a8f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220811547_ascend_pt/PROF_000003_20261102220811562_02056266ALFAJHLM/mindstudio_profiler_output/op_summary_20261102220815.csv",
+          "sha256": "2113d0a855ab57e0ebd37a5f5faa1a425e26ea03e853d33d301bd2a69028aa80",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220822377_ascend_pt/PROF_000004_20261102220822400_02056266PIQAGGBE/mindstudio_profiler_output/op_summary_20261102220825.csv",
+          "sha256": "9a90f45a30614051c5287aa6d532f158372e22448e566a96603e4c50005923de",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220827565_ascend_pt/PROF_000005_20261102220827582_02056266LFNGMRJF/mindstudio_profiler_output/op_summary_20261102220831.csv",
+          "sha256": "b276ad66962df1c122feb5fcdf86f2feac1cd195ccdd284128bc5d76e62ca165",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220833176_ascend_pt/PROF_000006_20261102220833191_02056266HJDKQCIC/mindstudio_profiler_output/op_summary_20261102220836.csv",
+          "sha256": "0161bc4d57b9c4fdf4d1535d73ee63068a96ce8dfbf48267bda757659cc7ea95",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220844106_ascend_pt/PROF_000007_20261102220844121_02056266GLHLOLBP/mindstudio_profiler_output/op_summary_20261102220847.csv",
+          "sha256": "61b1eda69afd22eea7f0feaa0ef4cde099246dc0646e6c20a60826d1e9e55794",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220849805_ascend_pt/PROF_000008_20261102220849831_02056266DCMRHING/mindstudio_profiler_output/op_summary_20261102220853.csv",
+          "sha256": "4d27c7a1532fedd8a94dd10b13f4b34a51df9a30860d93fdd22f371803d4ab82",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2056266_20261102220855332_ascend_pt/PROF_000009_20261102220855347_02056266DAEEONIE/mindstudio_profiler_output/op_summary_20261102220858.csv",
+          "sha256": "fa3e1f4c3e7bdbe0450bb028bf6874e725d5b0993665e324ca2b8fad8525326a",
+          "matching_rows": 20
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "2076309"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220916985_ascend_pt/PROF_000001_20261102220916998_02076309RNRMDDBR/mindstudio_profiler_output/op_summary_20261102220920.csv",
+          "sha256": "34703f0c481f2047338cfd03de9d97ad2a3a41cc1c4ae4d2278c44535d234cb8",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220922527_ascend_pt/PROF_000002_20261102220922545_02076309PRQIOGIL/mindstudio_profiler_output/op_summary_20261102220925.csv",
+          "sha256": "19b2f73a153f34f08f6bebbff97b10edbb44f487538742c4a22b16c4ce572f18",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220927690_ascend_pt/PROF_000003_20261102220927714_02076309GMGLIGCK/mindstudio_profiler_output/op_summary_20261102220931.csv",
+          "sha256": "b0393a0dbd1dac4a95e1eacffddbd6abe0747ce5c27307d3621de30f6c7bd1d2",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220938390_ascend_pt/PROF_000004_20261102220938405_02076309CLKEAEON/mindstudio_profiler_output/op_summary_20261102220941.csv",
+          "sha256": "646d510192a222da9e507b11c92acfccca9e44d0e3caf1157d34567dcf84b217",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220943659_ascend_pt/PROF_000005_20261102220943674_02076309GFGMHFBN/mindstudio_profiler_output/op_summary_20261102220947.csv",
+          "sha256": "1a48b42577f2621208d70cc4cf658256dda806d8da1a9bc8f884ead69e837d11",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102220949570_ascend_pt/PROF_000006_20261102220949584_02076309FBJEOKKC/mindstudio_profiler_output/op_summary_20261102220953.csv",
+          "sha256": "20cabe27c5a9091f06d8bf4bc6f9aaf065ebd060a1749b05bb4fd1a4ce762e00",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102221000637_ascend_pt/PROF_000007_20261102221000652_02076309BHBOFMQD/mindstudio_profiler_output/op_summary_20261102221004.csv",
+          "sha256": "b1ab510e7286fceb0fa057c7e0368c3e46000064990b8cb50cd5034584eab41f",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102221006134_ascend_pt/PROF_000008_20261102221006148_02076309LHGGQGEN/mindstudio_profiler_output/op_summary_20261102221010.csv",
+          "sha256": "f8a2247055686928f9a84724b018e374c281bf9230ad08ddc797a3a02de68fd6",
+          "matching_rows": 20
+        },
+        {
+          "path": "export_only_prof_dir/tbe_2076309_20261102221012068_ascend_pt/PROF_000009_20261102221012094_02076309PDMOMRPH/mindstudio_profiler_output/op_summary_20261102221015.csv",
+          "sha256": "6cb8863682568d1619b2abb0d6691c4844563b994573a07d4455d9750e14a07d",
+          "matching_rows": 20
+        }
+      ]
+    }
+  ],
+  "interpretation": "CANN launch configuration, not measured active-core occupancy"
+}

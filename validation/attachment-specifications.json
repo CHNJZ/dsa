@@ -1,0 +1,149 @@
+{
+  "fields": [
+    "B",
+    "SQ",
+    "H",
+    "L",
+    "TOPK"
+  ],
+  "dtype": "bfloat16",
+  "kv_heads": 1,
+  "qk_dim": 576,
+  "value_dim": 512,
+  "sparse_mode": 0,
+  "includes_indexer": false,
+  "return_softmax_max_sum": true,
+  "scale": 0.041666666666666664,
+  "requested_device": 2,
+  "cases": {
+    "issue": {
+      "decode_b1": [
+        1,
+        1,
+        128,
+        8192,
+        2048
+      ],
+      "decode_b8": [
+        8,
+        1,
+        128,
+        32768,
+        2048
+      ],
+      "decode_b32": [
+        32,
+        1,
+        128,
+        32768,
+        2048
+      ],
+      "decode_tp8": [
+        8,
+        1,
+        16,
+        32768,
+        2048
+      ],
+      "prefill_q16": [
+        1,
+        16,
+        128,
+        8192,
+        2048
+      ],
+      "prefill_q64": [
+        1,
+        64,
+        128,
+        32768,
+        2048
+      ],
+      "prefill_tp8": [
+        1,
+        128,
+        16,
+        32768,
+        2048
+      ],
+      "prefill_k512": [
+        1,
+        128,
+        64,
+        32768,
+        512
+      ]
+    },
+    "comment": {
+      "decode_b4_h128": [
+        4,
+        1,
+        128,
+        8192,
+        2048
+      ],
+      "decode_b4_h64": [
+        4,
+        1,
+        64,
+        8192,
+        2048
+      ],
+      "decode_b4_h32": [
+        4,
+        1,
+        32,
+        8192,
+        2048
+      ],
+      "decode_b4_h16": [
+        4,
+        1,
+        16,
+        8192,
+        2048
+      ],
+      "prefill_b4_h128": [
+        4,
+        8192,
+        128,
+        8192,
+        2048
+      ],
+      "prefill_b4_h64": [
+        4,
+        8192,
+        64,
+        8192,
+        2048
+      ],
+      "prefill_b4_h32": [
+        4,
+        8192,
+        32,
+        8192,
+        2048
+      ],
+      "prefill_b4_h16": [
+        4,
+        8192,
+        16,
+        8192,
+        2048
+      ]
+    }
+  },
+  "precision_gates": {
+    "out_max_normalized": 0.005,
+    "max_max_normalized": 0.0001,
+    "sum_max_normalized": 0.0001
+  },
+  "timing": "median of summed durations of every device task per invocation, including packing, gather and merge; alternating paired rounds",
+  "final_performance_devices": [
+    "5",
+    "6"
+  ],
+  "precision_devices": [
+    "2"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "checked_at_utc": "2026-11-03T01:28:39.974Z",
+  "url": "https://github.com/triton-lang/triton-ascend/pull/2940",
+  "state": "open",
+  "merged": false,
+  "head_sha": "564a1e5b014adbc91b533c81dc699ec4425c1c99",
+  "base_sha": "0ee9f1a3d5e91807aba88d84f124628eff52acd5",
+  "commits": 2,
+  "workflow_runs": {
+    "workflow_runs": [
+      {
+        "id": 41559838008,
+        "name": "Pre-Commit Check",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 7748,
+        "jobs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838008/jobs",
+        "logs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838008/logs",
+        "workflow_id": 261564440
+      },
+      {
+        "id": 41559837997,
+        "name": "PR Title Check",
+        "status": "completed",
+        "conclusion": "success",
+        "run_number": 11155,
+        "jobs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559837997/jobs",
+        "logs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559837997/logs",
+        "workflow_id": 284068861
+      },
+      {
+        "id": 41559838162,
+        "name": "Integration Tests",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_number": 10208,
+        "jobs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838162/jobs",
+        "logs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838162/logs",
+        "workflow_id": 241783889
+      },
+      {
+        "id": 41559838129,
+        "name": "Documentation",
+        "status": "in_progress",
+        "conclusion": null,
+        "run_number": 1001,
+        "jobs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838129/jobs",
+        "logs_url": "https://api.github.com/repos/triton-lang/triton-ascend/actions/runs/41559838129/logs",
+        "workflow_id": 230890243
+      }
+    ]
+  },
+  "validated_implementation": "4a96387550889968145e01e2a66fab99f5cf9341",
+  "docs_only_followup": "564a1e5b014adbc91b533c81dc699ec4425c1c99",
+  "local_docs_gate": "passed 5 checks",
+  "full_repository_precommit_after_docs_fix": "passed",
+  "note": "Previous head Documentation failed on pre-existing README spelling npuir. Follow-up corrects it to NPU-IR. Product and test code unchanged; final-head CI results are independent of implementation-head validation."
+}

@@ -1,0 +1,820 @@
+{
+  "case": "prefill_b4_h64",
+  "shape": [
+    4,
+    8192,
+    64,
+    8192,
+    2048
+  ],
+  "seed": 20261102,
+  "family": "normal",
+  "process_id": 2029665,
+  "mode": "timing",
+  "api_mode": "legacy",
+  "physical_device": "1",
+  "torch": "2.7.1+cpu",
+  "torch_npu": "2.7.1.post7.dev20260707",
+  "triton": "3.6.0",
+  "triton_path": "/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/__init__.py",
+  "config": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 64,
+    "bn": 128,
+    "split": 1
+  },
+  "sampling_method": "per-implementation-blocks",
+  "original_kernels": [
+    {
+      "name": "sparse_mla_kernel",
+      "binary_sha256": "dc77601a823737cc4ddce441681e70c3094e30001891bfe7b8fe44b7e73666ae",
+      "executable_sections": {
+        ".text": "c7945667b337225936f1bab3f00c45d0a2752a08db65d623494bd6d66110097e"
+      },
+      "normalized_adapter_sha256": "a72e686b79cd2cc1fbc561cb138afd75c32884414838c7f08e7dea1e96c68e53",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='07d4565e641ebd528627e3e6e7aa77c2beadf06844ca6eecef4ee196a069453d', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='sparse_mla_kernel', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='mix', multibuffer=True, multibuffer_mode=None, name='sparse_mla_kernel', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    }
+  ],
+  "refactored_kernels": [
+    {
+      "name": "workspace_attention",
+      "binary_sha256": "6f34ccc4fcdc73791ccb4e55a08dc69f067f3a61fa6a6efd9c80727bb7353c1e",
+      "executable_sections": {
+        ".text": "c7945667b337225936f1bab3f00c45d0a2752a08db65d623494bd6d66110097e"
+      },
+      "normalized_adapter_sha256": "a72e686b79cd2cc1fbc561cb138afd75c32884414838c7f08e7dea1e96c68e53",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='1aa7803b6599a2ae1f24f0f9b2dfc64380331233bf49428cb99ddaf5afcc4b61', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='workspace_attention', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='mix', multibuffer=True, multibuffer_mode=None, name='workspace_attention', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    }
+  ],
+  "rounds": [
+    {
+      "id": 0,
+      "profiles": {
+        "original": {
+          "task_sum_us": [
+            107417.236,
+            107408.045,
+            108853.729,
+            109300.698,
+            109200.915,
+            108900.084,
+            109176.902,
+            109025.01,
+            109355.804,
+            109315.368,
+            109197.648,
+            109242.068,
+            109366.07,
+            109384.504,
+            109379.342,
+            109391.368,
+            109333.35,
+            109507.0,
+            109397.786,
+            109091.017
+          ],
+          "task_span_us": [
+            107417.25,
+            107408.0,
+            108853.75,
+            109300.75,
+            109201.0,
+            108900.0,
+            109177.0,
+            109025.0,
+            109355.75,
+            109315.25,
+            109197.75,
+            109242.0,
+            109366.0,
+            109384.5,
+            109379.25,
+            109391.25,
+            109333.25,
+            109507.0,
+            109397.75,
+            109091.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 11,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 3
+              }
+            }
+          ]
+        },
+        "ascendc": {
+          "task_sum_us": [
+            65110.998,
+            69602.091,
+            72380.328,
+            72268.719,
+            72267.937,
+            72330.479,
+            72343.882,
+            72241.366,
+            71902.109,
+            71889.864,
+            72073.584,
+            71827.325,
+            72225.614,
+            71769.313,
+            72197.876,
+            72378.168,
+            72024.161,
+            72125.076,
+            72208.797,
+            72392.705
+          ],
+          "task_span_us": [
+            65111.0,
+            69602.0,
+            72380.25,
+            72268.75,
+            72268.0,
+            72330.5,
+            72344.0,
+            72241.25,
+            71902.0,
+            71889.75,
+            72073.5,
+            71827.25,
+            72225.5,
+            71769.25,
+            72198.0,
+            72378.25,
+            72024.25,
+            72125.0,
+            72208.75,
+            72392.75
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 61,
+                "Task Id": 36,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 7
+              }
+            }
+          ]
+        },
+        "refactored": {
+          "task_sum_us": [
+            107381.431,
+            107379.593,
+            108132.133,
+            108812.969,
+            109313.55,
+            109194.978,
+            109131.099,
+            109352.845,
+            109052.203,
+            109227.424,
+            109110.359,
+            109349.298,
+            109297.158,
+            109092.358,
+            109460.39,
+            109399.393,
+            109347.667,
+            109319.012,
+            109377.004,
+            109572.187
+          ],
+          "task_span_us": [
+            107381.5,
+            107379.5,
+            108132.25,
+            108813.0,
+            109313.5,
+            109195.0,
+            109131.0,
+            109352.75,
+            109052.25,
+            109227.5,
+            109110.25,
+            109349.25,
+            109297.25,
+            109092.25,
+            109460.5,
+            109399.5,
+            109347.75,
+            109319.0,
+            109377.0,
+            109572.25
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "workspace_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 61,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 2
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          108845.192,
+          109788.106,
+          109173.494,
+          109777.519,
+          109692.222,
+          109731.14,
+          109650.85,
+          109848.847,
+          109728.075,
+          109769.758,
+          109978.561,
+          109894.666,
+          110063.018,
+          109957.54,
+          110141.445,
+          110240.474,
+          109913.303,
+          109837.279,
+          110212.993,
+          110318.651
+        ],
+        "ascendc": [
+          65328.608,
+          72064.082,
+          72445.244,
+          72312.224,
+          71541.918,
+          72418.944,
+          72308.589,
+          72485.604,
+          72561.598,
+          72400.927,
+          72552.034,
+          71962.5,
+          72098.143,
+          71761.438,
+          72721.088,
+          72474.718,
+          72591.914,
+          72722.73,
+          72779.204,
+          72680.787
+        ],
+        "refactored": [
+          108117.44,
+          109973.914,
+          109675.877,
+          109801.716,
+          109899.593,
+          109706.373,
+          109728.316,
+          109803.578,
+          109841.716,
+          109896.548,
+          109844.3,
+          110066.032,
+          110085.281,
+          109951.28,
+          109766.263,
+          110256.458,
+          110008.265,
+          110184.62,
+          110036.208,
+          110317.079
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "profiles": {
+        "ascendc": {
+          "task_sum_us": [
+            65107.264,
+            69458.495,
+            72631.504,
+            72736.557,
+            72749.628,
+            72526.661,
+            72255.275,
+            72655.507,
+            72821.543,
+            72593.423,
+            72743.372,
+            72731.667,
+            72764.012,
+            72772.121,
+            72765.397,
+            72743.589,
+            72805.061,
+            72325.763,
+            72818.49,
+            72779.009
+          ],
+          "task_span_us": [
+            65107.25,
+            69458.5,
+            72631.5,
+            72736.5,
+            72749.75,
+            72526.75,
+            72255.25,
+            72655.5,
+            72821.5,
+            72593.5,
+            72743.25,
+            72731.75,
+            72764.0,
+            72772.0,
+            72765.5,
+            72743.5,
+            72805.0,
+            72325.75,
+            72818.5,
+            72779.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 61,
+                "Task Id": 146,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 47
+              }
+            }
+          ]
+        },
+        "refactored": {
+          "task_sum_us": [
+            107418.96,
+            107447.898,
+            109996.823,
+            109489.25,
+            109902.556,
+            109871.151,
+            110064.175,
+            109941.973,
+            110043.003,
+            110021.652,
+            110126.105,
+            110030.611,
+            110023.073,
+            110118.399,
+            110155.434,
+            110119.409,
+            110014.829,
+            110205.081,
+            109462.699,
+            110208.911
+          ],
+          "task_span_us": [
+            107419.0,
+            107448.0,
+            109996.75,
+            109489.25,
+            109902.5,
+            109871.25,
+            110064.25,
+            109942.0,
+            110043.0,
+            110021.75,
+            110126.0,
+            110030.5,
+            110023.0,
+            110118.5,
+            110155.5,
+            110119.5,
+            110014.75,
+            110205.0,
+            109462.75,
+            110209.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "workspace_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 171,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 22
+              }
+            }
+          ]
+        },
+        "original": {
+          "task_sum_us": [
+            107660.184,
+            107449.035,
+            109790.288,
+            110282.227,
+            111462.242,
+            110329.818,
+            109986.053,
+            110064.889,
+            110328.603,
+            110091.017,
+            110139.813,
+            113636.555,
+            110196.065,
+            110247.821,
+            109708.538,
+            110423.548,
+            110408.959,
+            110591.319,
+            111517.047,
+            110038.8
+          ],
+          "task_span_us": [
+            107660.25,
+            107449.0,
+            109790.25,
+            110282.25,
+            111462.25,
+            110329.75,
+            109986.0,
+            110065.0,
+            110328.5,
+            110091.0,
+            110139.75,
+            113636.5,
+            110196.0,
+            110247.75,
+            109708.5,
+            110423.5,
+            110409.0,
+            110591.25,
+            111517.0,
+            110038.75
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 196,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 3
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          107946.433,
+          110285.161,
+          109843.088,
+          110405.241,
+          109597.99,
+          110423.999,
+          110491.63,
+          110577.86,
+          110595.456,
+          110054.145,
+          110144.831,
+          110590.78,
+          110745.421,
+          110636.619,
+          111004.77,
+          113829.548,
+          116952.081,
+          112510.67,
+          111723.689,
+          135877.778
+        ],
+        "ascendc": [
+          65447.006,
+          72795.68,
+          72240.627,
+          72711.062,
+          73018.643,
+          72774.067,
+          72407.036,
+          72650.271,
+          73057.812,
+          72922.619,
+          72864.002,
+          73025.964,
+          73025.985,
+          77699.705,
+          73430.041,
+          73841.127,
+          73977.712,
+          83728.427,
+          74164.522,
+          76841.297
+        ],
+        "refactored": [
+          108083.639,
+          110127.334,
+          110252.662,
+          110410.409,
+          110378.591,
+          110072.182,
+          110398.341,
+          110334.255,
+          110410.74,
+          109865.071,
+          110056.979,
+          110613.022,
+          110804.95,
+          110385.281,
+          110948.446,
+          111383.969,
+          111452.191,
+          112887.584,
+          112969.858,
+          110769.588
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "profiles": {
+        "refactored": {
+          "task_sum_us": [
+            107513.802,
+            107510.404,
+            110855.489,
+            110952.367,
+            110774.247,
+            110540.446,
+            111209.846,
+            110345.815,
+            111852.222,
+            110412.642,
+            110974.192,
+            110852.223,
+            111107.373,
+            111060.227,
+            110868.621,
+            110885.05,
+            111337.199,
+            111356.69,
+            111303.191,
+            113179.899
+          ],
+          "task_span_us": [
+            107513.75,
+            107510.5,
+            110855.5,
+            110952.25,
+            110774.25,
+            110540.5,
+            111209.75,
+            110345.75,
+            111852.25,
+            110412.75,
+            110974.25,
+            110852.25,
+            111107.25,
+            111060.25,
+            110868.5,
+            110885.0,
+            111337.25,
+            111356.75,
+            111303.25,
+            113180.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "workspace_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 281,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 3
+              }
+            }
+          ]
+        },
+        "original": {
+          "task_sum_us": [
+            107716.547,
+            109353.719,
+            110878.756,
+            112111.192,
+            110368.14,
+            110750.411,
+            110749.632,
+            110850.164,
+            110837.815,
+            110205.124,
+            110356.417,
+            110824.614,
+            110808.32,
+            110915.692,
+            110816.883,
+            110416.87,
+            110940.951,
+            110928.357,
+            111883.857,
+            110673.975
+          ],
+          "task_span_us": [
+            107716.5,
+            109353.75,
+            110878.75,
+            112111.25,
+            110368.25,
+            110750.5,
+            110749.75,
+            110850.25,
+            110837.75,
+            110205.0,
+            110356.5,
+            110824.5,
+            110808.25,
+            110915.75,
+            110817.0,
+            110416.75,
+            110941.0,
+            110928.25,
+            111883.75,
+            110674.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 61,
+                "Task Id": 306,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 42
+              }
+            }
+          ]
+        },
+        "ascendc": {
+          "task_sum_us": [
+            65315.238,
+            70575.985,
+            72920.266,
+            73170.442,
+            72818.62,
+            73168.423,
+            73047.374,
+            73106.318,
+            72798.002,
+            73237.002,
+            73161.377,
+            73291.601,
+            73231.127,
+            72796.361,
+            73231.481,
+            72868.979,
+            73229.533,
+            72822.52,
+            73353.114,
+            73045.193
+          ],
+          "task_span_us": [
+            65315.25,
+            70576.0,
+            72920.25,
+            73170.5,
+            72818.5,
+            73168.5,
+            73047.25,
+            73106.25,
+            72798.0,
+            73237.0,
+            73161.5,
+            73291.5,
+            73231.25,
+            72796.25,
+            73231.5,
+            72869.0,
+            73229.5,
+            72822.5,
+            73353.0,
+            73045.25
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 61,
+                "Task Id": 331,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 7
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          107768.677,
+          110790.339,
+          110304.49,
+          110894.525,
+          110762.678,
+          110787.114,
+          110850.76,
+          110877.44,
+          110975.396,
+          110921.426,
+          110947.595,
+          111027.234,
+          110349.697,
+          111090.409,
+          111267.274,
+          111337.639,
+          110998.631,
+          111287.976,
+          111294.795,
+          111416.869
+        ],
+        "ascendc": [
+          70347.707,
+          72556.76,
+          73281.678,
+          72546.105,
+          73251.973,
+          73261.769,
+          72574.918,
+          73173.836,
+          72272.774,
+          73127.527,
+          72941.698,
+          72475.769,
+          73237.973,
+          73268.739,
+          73310.791,
+          73444.392,
+          73385.735,
+          73263.341,
+          72538.704,
+          73185.734
+        ],
+        "refactored": [
+          108890.169,
+          110985.842,
+          110933.614,
+          110835.757,
+          110823.799,
+          110831.089,
+          110883.398,
+          110925.632,
+          111110.87,
+          110705.382,
+          111062.967,
+          111157.509,
+          111051.2,
+          110526.914,
+          111101.335,
+          111106.042,
+          111540.014,
+          111345.712,
+          110715.186,
+          111402.557
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

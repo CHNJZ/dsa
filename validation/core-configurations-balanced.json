@@ -1,0 +1,894 @@
+{
+  "matrix": "x/validation/balanced-all16",
+  "records": [
+    {
+      "case": "decode_b1",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4066015"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "ragged_attention",
+          "OP Type": "ragged_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4066015_20261103090700605_ascend_pt/PROF_000001_20261103090700623_04066015HBRNIJGP/mindstudio_profiler_output/op_summary_20261103090702.csv",
+          "sha256": "c1a6e72c7af602b41a4993f3cdf3a69b0566fa15c4dbff5cd9077dd97b57ebb4",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4066015_20261103090704210_ascend_pt/PROF_000002_20261103090704227_04066015EAQAMECD/mindstudio_profiler_output/op_summary_20261103090706.csv",
+          "sha256": "94a96c1a8a5e4b087fb4cbb92adaa32870372a69e57bb256d9e51bd024926fbb",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4066015_20261103090707686_ascend_pt/PROF_000003_20261103090707703_04066015FHDDIDBI/mindstudio_profiler_output/op_summary_20261103090709.csv",
+          "sha256": "5eb11a84735b0e35a19069df660e069ca72f557f7b4b5057fd0b55e5d033849f",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_b8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4070257"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4070257_20261103090719620_ascend_pt/PROF_000001_20261103090719640_04070257FMPEAFLF/mindstudio_profiler_output/op_summary_20261103090721.csv",
+          "sha256": "4f98eb5c89afe776a62655708680482ea06fa916f2b28c5dd10484bde4492e92",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4070257_20261103090723226_ascend_pt/PROF_000002_20261103090723249_04070257RQJEDHPP/mindstudio_profiler_output/op_summary_20261103090725.csv",
+          "sha256": "6093bd66526792096e789f50f899a04839580a8122b2efb050853d540c4ac7c3",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4070257_20261103090726833_ascend_pt/PROF_000003_20261103090726852_04070257ICHGFIFA/mindstudio_profiler_output/op_summary_20261103090728.csv",
+          "sha256": "d9c8d06df2746dcc9ce8b0162873e966eba3b3ef2090b4787729ba3ed2cb56f9",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_b32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4074540"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4074540_20261103090740556_ascend_pt/PROF_000001_20261103090740577_04074540FDFHPDHL/mindstudio_profiler_output/op_summary_20261103090742.csv",
+          "sha256": "8abff6eb3d5970dedb802ccdd7ec8899f4c81a483350dc6c3d7f3bcba45072b9",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4074540_20261103090744166_ascend_pt/PROF_000002_20261103090744193_04074540LOINMQQK/mindstudio_profiler_output/op_summary_20261103090746.csv",
+          "sha256": "fd42227e6c2d539de9b348bca8c78387e85780218c92b0aef75087103ff16886",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4074540_20261103090747768_ascend_pt/PROF_000003_20261103090747785_04074540DNKIEREO/mindstudio_profiler_output/op_summary_20261103090749.csv",
+          "sha256": "0f9b857dc7484049bee4f98fb1545d4b1b346a4ca87800cf02a6cda1cf3d8064",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_tp8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4079117"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4079117_20261103090759331_ascend_pt/PROF_000001_20261103090759352_04079117FEPCACGI/mindstudio_profiler_output/op_summary_20261103090801.csv",
+          "sha256": "50a718ff3af9682bbb1125b3f91920d6c775159ec9b8dda405a3a7e16051202a",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4079117_20261103090802926_ascend_pt/PROF_000002_20261103090802945_04079117HMOKBDQK/mindstudio_profiler_output/op_summary_20261103090804.csv",
+          "sha256": "d1c6d1ae172d1b3bb8d033209bef849674e5d6e97a0756d65fc343f73f9e068d",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4079117_20261103090806432_ascend_pt/PROF_000003_20261103090806450_04079117IPDEBQPN/mindstudio_profiler_output/op_summary_20261103090808.csv",
+          "sha256": "483dff585f5eba003d2f9ee5bec86a6db2743489719afd6a0f5d09964d07858c",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "prefill_q16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4083503"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4083503_20261103090818235_ascend_pt/PROF_000001_20261103090818255_04083503EAMOIMNN/mindstudio_profiler_output/op_summary_20261103090820.csv",
+          "sha256": "eeaf9a61003f56284f208cc4f8a39666a7182cecf9b6bff49274a5300ccb11ea",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4083503_20261103090821721_ascend_pt/PROF_000002_20261103090821739_04083503DMDLMALO/mindstudio_profiler_output/op_summary_20261103090823.csv",
+          "sha256": "2d0d9f0ab61983155eeba61028c9ad94f7b3b8da8f1c19954e36149ded88944d",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4083503_20261103090825313_ascend_pt/PROF_000003_20261103090825332_04083503FDAOJAHA/mindstudio_profiler_output/op_summary_20261103090827.csv",
+          "sha256": "cbcd446c2249108fcc8e264b27a32184298377c9ed77b0db7fb8b00a4092cef7",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "prefill_q64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4088910"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4088910_20261103090838626_ascend_pt/PROF_000001_20261103090838649_04088910FAKCDQDL/mindstudio_profiler_output/op_summary_20261103090840.csv",
+          "sha256": "e7988f455832be150bf3eb4cfafaab5eac3d1e6370134f070556bd0532152227",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4088910_20261103090842245_ascend_pt/PROF_000002_20261103090842264_04088910KMDKHQAO/mindstudio_profiler_output/op_summary_20261103090843.csv",
+          "sha256": "49911f0a132a36e8686b84ee3fad3061cccc72ab6735460b945700f60a63c76f",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4088910_20261103090845651_ascend_pt/PROF_000003_20261103090845669_04088910EBOFRCAH/mindstudio_profiler_output/op_summary_20261103090847.csv",
+          "sha256": "79876395b9c319550628978724dc822968a5c1da2301fd62cc16dc72c28f69a3",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "prefill_tp8",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4096482"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4096482_20261103090857398_ascend_pt/PROF_000001_20261103090857424_04096482DDIRAAMP/mindstudio_profiler_output/op_summary_20261103090859.csv",
+          "sha256": "7e9b5a9379b4d75fc8fe2cad88a7f4728bd0b260336d9ef4e452a5adf411ccfe",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4096482_20261103090901053_ascend_pt/PROF_000002_20261103090901073_04096482DKAQEKIK/mindstudio_profiler_output/op_summary_20261103090902.csv",
+          "sha256": "7919d2c5c15816504195d6c6edc258ac9370a55ffd9c33cea011b37ae2063bf8",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4096482_20261103090904579_ascend_pt/PROF_000003_20261103090904604_04096482MILQPPIE/mindstudio_profiler_output/op_summary_20261103090906.csv",
+          "sha256": "e18ab9f1ab0284038600c26afec46757011d4c16842408d3b2cf9915c7468923",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "prefill_k512",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4102408"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4102408_20261103090917496_ascend_pt/PROF_000001_20261103090917521_04102408APFFJJQQ/mindstudio_profiler_output/op_summary_20261103090919.csv",
+          "sha256": "5f51e09322e9be211b69420b79f03dcdbf4b00eaaf9ddbabd8c7ecdf45237f8c",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4102408_20261103090921020_ascend_pt/PROF_000002_20261103090921043_04102408HHPEABDA/mindstudio_profiler_output/op_summary_20261103090922.csv",
+          "sha256": "33affdc3fc5d3d975eba3b383a644181121d305311d66fdad92985d99981f48e",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4102408_20261103090924539_ascend_pt/PROF_000003_20261103090924571_04102408IBLFNDAO/mindstudio_profiler_output/op_summary_20261103090926.csv",
+          "sha256": "de870fa9700d66c11efdb468c785042befd7c0ced83c6d2edefce0ba11bc37e9",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h128",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4106936"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4106936_20261103090937233_ascend_pt/PROF_000001_20261103090937255_04106936NRNBEDQD/mindstudio_profiler_output/op_summary_20261103090939.csv",
+          "sha256": "66777858d84358e7c66a7f4fc0c2f381622cc340cb771e95ab212761d865df14",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4106936_20261103090940849_ascend_pt/PROF_000002_20261103090940868_04106936QFFHHOFN/mindstudio_profiler_output/op_summary_20261103090942.csv",
+          "sha256": "1297a505cc4c91485d2384a9335f8f7f2d0b125a8404abbab68456612c0dace6",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4106936_20261103090944448_ascend_pt/PROF_000003_20261103090944469_04106936EEDFBCEN/mindstudio_profiler_output/op_summary_20261103090946.csv",
+          "sha256": "2616b122a55f84af4338e0e1cf1feaf2df71fa8d0a378f11f7bd519e3ee997ef",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4111813"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4111813_20261103090957387_ascend_pt/PROF_000001_20261103090957416_04111813AIMDPFBD/mindstudio_profiler_output/op_summary_20261103090959.csv",
+          "sha256": "0694a235eb42236e6ebc93c84c54482f77e182e046c82b1c3092e3ab7916c18d",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4111813_20261103091000900_ascend_pt/PROF_000002_20261103091000922_04111813JLOOMCMJ/mindstudio_profiler_output/op_summary_20261103091002.csv",
+          "sha256": "50d990eb0c94be4320de13e074a43e120dccfc5a203c808440798da7e2edd798",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4111813_20261103091004415_ascend_pt/PROF_000003_20261103091004434_04111813CMGAIGNH/mindstudio_profiler_output/op_summary_20261103091006.csv",
+          "sha256": "5b43534dd014a2dd6bc9b33c28dd7a3581496a347f70e4e0f3fd3e245bb31f65",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4116593"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4116593_20261103091017036_ascend_pt/PROF_000001_20261103091017056_04116593MHNKCPOD/mindstudio_profiler_output/op_summary_20261103091018.csv",
+          "sha256": "b484dced87959ee5bcdd452d7b2b582b09536e322d5350051f4d71bf5e1a4e90",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4116593_20261103091020663_ascend_pt/PROF_000002_20261103091020682_04116593PINKKBOL/mindstudio_profiler_output/op_summary_20261103091022.csv",
+          "sha256": "21f66e9641f061b6563f0591960a901676fac8046312aadf902e78cd7cca0960",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4116593_20261103091024253_ascend_pt/PROF_000003_20261103091024271_04116593OIEDHLQL/mindstudio_profiler_output/op_summary_20261103091026.csv",
+          "sha256": "34df0387530047357cb0b14b3790c1420ad138143dd85fdced62bcc53104d9fd",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "decode_b4_h16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4123846"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "merge_partials",
+          "OP Type": "merge_partials",
+          "Task Type": "AI_VECTOR_CORE",
+          "Block Num": "56",
+          "Mix Block Num": "0",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4123846_20261103091035461_ascend_pt/PROF_000001_20261103091035482_04123846DERADDOQ/mindstudio_profiler_output/op_summary_20261103091037.csv",
+          "sha256": "932c51a75752b64034e3c07533ac6d747f17b2f9867cce9e5e4853eedba52baf",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4123846_20261103091038967_ascend_pt/PROF_000002_20261103091038988_04123846ECAIBMPM/mindstudio_profiler_output/op_summary_20261103091040.csv",
+          "sha256": "6040e70a5f2f9aa79d530d64700a2ed69d267690a5afd09638fd2da1f9885db6",
+          "matching_rows": 150
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4123846_20261103091042555_ascend_pt/PROF_000003_20261103091042574_04123846NQIFFAHF/mindstudio_profiler_output/op_summary_20261103091044.csv",
+          "sha256": "17051769a1f41c6e7fb6e8cdf4a801183a2d6a0471899826331b215ecff904fe",
+          "matching_rows": 150
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h128",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4129658"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4129658_20261103091107328_ascend_pt/PROF_000001_20261103091107342_04129658OAIKGMDM/mindstudio_profiler_output/op_summary_20261103091120.csv",
+          "sha256": "edde3cc3b9934c735eb70710b02c9cd8ba21fa5e7168bde832d9bbfcbe16eb5c",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4129658_20261103091135615_ascend_pt/PROF_000002_20261103091135641_04129658AEPBQRPQ/mindstudio_profiler_output/op_summary_20261103091149.csv",
+          "sha256": "cf55632963145e3296459a0116736cd1392664c44c79f84584543d0ca4c6511d",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4129658_20261103091204522_ascend_pt/PROF_000003_20261103091204549_04129658PNPENLJF/mindstudio_profiler_output/op_summary_20261103091222.csv",
+          "sha256": "e1dd12b105960b6cf48676d9060675eb4e7d232589f3fe97b387d59053f7f2b9",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h64",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4150958"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4150958_20261103091311744_ascend_pt/PROF_000001_20261103091311765_04150958MRQOMGDN/mindstudio_profiler_output/op_summary_20261103091322.csv",
+          "sha256": "2690c03787b3dfe1a42965d1dd8fb68066d0e370e81d68c1781c1c9fa29bf2df",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4150958_20261103091333802_ascend_pt/PROF_000002_20261103091333817_04150958CMQDPOLM/mindstudio_profiler_output/op_summary_20261103091346.csv",
+          "sha256": "37203159e89d3e2a9ac2f4925afa5754493d24961983f913e11a62e15ea7fb7c",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4150958_20261103091358067_ascend_pt/PROF_000003_20261103091358081_04150958HQRAMDIG/mindstudio_profiler_output/op_summary_20261103091408.csv",
+          "sha256": "238f928e82738c514c80a454f30b7e785ed0ba33cfef331247744f0299f0e032",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h32",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4173300"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4173300_20261103091451514_ascend_pt/PROF_000001_20261103091451524_04173300LPNNQGON/mindstudio_profiler_output/op_summary_20261103091501.csv",
+          "sha256": "f5409d3e85c95303df086d62204cfad92d67a479573e521c8024b46f5b520a44",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4173300_20261103091512229_ascend_pt/PROF_000002_20261103091512253_04173300OBNJNAOB/mindstudio_profiler_output/op_summary_20261103091522.csv",
+          "sha256": "55c1c3fc77f49c4bc4d7756266ebd5e5409bc77e88a052281b436c0bff72be31",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4173300_20261103091532416_ascend_pt/PROF_000003_20261103091532441_04173300OPAAKKBJ/mindstudio_profiler_output/op_summary_20261103091543.csv",
+          "sha256": "ab99f5ad1595babbf66fea10780b52aaef2e4b57a754309cddb3167ef2815ea1",
+          "matching_rows": 90
+        }
+      ]
+    },
+    {
+      "case": "prefill_b4_h16",
+      "family": "normal",
+      "seed": 20261102,
+      "process_ids": [
+        "4190239"
+      ],
+      "configurations": [
+        {
+          "Op Name": "SparseFlashAttention",
+          "OP Type": "SparseFlashAttention",
+          "Task Type": "MIX_AIC",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "sparse_mla_kernel",
+          "OP Type": "sparse_mla_kernel",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        },
+        {
+          "Op Name": "workspace_attention",
+          "OP Type": "workspace_attention",
+          "Task Type": "AI_CORE",
+          "Block Num": "28",
+          "Mix Block Num": "56",
+          "HF32 Eligible": "NO"
+        }
+      ],
+      "csv_evidence": [
+        {
+          "path": "export_only_prof_dir/tbe_4190239_20261103091624239_ascend_pt/PROF_000001_20261103091624247_04190239HQFFPBPG/mindstudio_profiler_output/op_summary_20261103091633.csv",
+          "sha256": "592ab9da08757ece15b93ffb2bb3509a8d2cd147b7f9fa9fb02a85475588ceb5",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4190239_20261103091643408_ascend_pt/PROF_000002_20261103091643435_04190239EDMJOQQM/mindstudio_profiler_output/op_summary_20261103091653.csv",
+          "sha256": "bbdccabfd51ee9d78cef798badc99a011b91b452f9751984159594ca0166a5fb",
+          "matching_rows": 90
+        },
+        {
+          "path": "export_only_prof_dir/tbe_4190239_20261103091703329_ascend_pt/PROF_000003_20261103091703343_04190239ICOEKINH/mindstudio_profiler_output/op_summary_20261103091713.csv",
+          "sha256": "8c90ff56828a184bf56394e5cde4f39f4a26d3bef898accb5adce2f52bb56ab7",
+          "matching_rows": 90
+        }
+      ]
+    }
+  ],
+  "interpretation": "CANN launch configuration, not measured active-core occupancy"
+}

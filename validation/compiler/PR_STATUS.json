@@ -1,0 +1,258 @@
+{
+  "baseRefName": "main-dev",
+  "commits": [
+    {
+      "authoredDate": "2026-11-02T14:26:59Z",
+      "authors": [
+        {
+          "email": "chenxiangting@huawei.com",
+          "id": "",
+          "login": "",
+          "name": "cxtjjcz"
+        }
+      ],
+      "committedDate": "2026-11-02T14:26:59Z",
+      "messageBody": "Motivation: Sparse attention needs scalar UB reads, typed aliases and\nruntime-strided row transfers without private code-generator adaptations.\n\nDesign: Add checked public APIs backed by native memref and HIVM builders.\nPreserve source offsets, destination pitch and visible storage aliases.\nUse static-capacity views with dynamic transfer subviews to support\nzero-offset pointer entries, and cover the interfaces with tla_ut.\n\nRisks: Dynamic bounds and manually scheduled buffer lifetimes remain the\ncaller's responsibility. Target-specific DMA constraints still apply.\n\nAssisted-by: AI",
+      "messageHeadline": "[Triton][TLA] feat: Add sparse DMA memory interfaces",
+      "oid": "4a96387550889968145e01e2a66fab99f5cf9341"
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/en/triton_api_extension/tla/memory.md",
+      "additions": 101,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/__init__.py",
+      "additions": 6,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/builder.py",
+      "additions": 3,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/core.py",
+      "additions": 13,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/cpp/tla_builder.cc",
+      "additions": 111,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/dma.py",
+      "additions": 48,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/scalar.py",
+      "additions": 67,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "third_party/ascend/language/tla/view.py",
+      "additions": 34,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/unittest/tla_ut/README.md",
+      "additions": 20,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "third_party/ascend/unittest/tla_ut/dma/strided_load.py",
+      "additions": 150,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "third_party/ascend/unittest/tla_ut/memory_frontend_contract.py",
+      "additions": 249,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "third_party/ascend/unittest/tla_ut/vector/byte_view.py",
+      "additions": 109,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "third_party/ascend/unittest/tla_ut/vector/scalar_load.py",
+      "additions": 115,
+      "deletions": 0,
+      "changeType": "ADDED"
+    }
+  ],
+  "headRefName": "codex/tla-dsa-interfaces",
+  "headRefOid": "4a96387550889968145e01e2a66fab99f5cf9341",
+  "isDraft": false,
+  "mergeStateStatus": "BLOCKED",
+  "mergeable": "MERGEABLE",
+  "number": 2940,
+  "state": "OPEN",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557291819/job/125659163191",
+      "name": "Docs gate",
+      "startedAt": "2026-11-03T01:05:02Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Documentation"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:04:43Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557287442/job/125659151321",
+      "name": "label",
+      "startedAt": "2026-11-03T01:04:35Z",
+      "status": "COMPLETED",
+      "workflowName": "Auto labeling"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:06:41Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557287224/job/125659150800",
+      "name": "RTD Preview",
+      "startedAt": "2026-11-03T01:04:34Z",
+      "status": "COMPLETED",
+      "workflowName": "Docs RTD Preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:04:40Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557292068/job/125659164213",
+      "name": "runner-preparation / prepare",
+      "startedAt": "2026-11-03T01:04:37Z",
+      "status": "COMPLETED",
+      "workflowName": "Integration Tests"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:08:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557287297/job/125659151154",
+      "name": "code-review",
+      "startedAt": "2026-11-03T01:04:57Z",
+      "status": "COMPLETED",
+      "workflowName": "OpenCodeReview PR Review"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:04:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557291725/job/125659162568",
+      "name": "Check PR title format",
+      "startedAt": "2026-11-03T01:04:36Z",
+      "status": "COMPLETED",
+      "workflowName": "PR Title Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:06:12Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557291878/job/125659163853",
+      "name": "pre-commit (code formatting)",
+      "startedAt": "2026-11-03T01:04:36Z",
+      "status": "COMPLETED",
+      "workflowName": "Pre-Commit Check"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-11-03T01:04:38Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557287328/job/125659151200",
+      "name": "restricted files labeler",
+      "startedAt": "2026-11-03T01:04:34Z",
+      "status": "COMPLETED",
+      "workflowName": "Restricted Files Labeler"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557292068/job/125659207441",
+      "name": "integration-tests-ascend / integration-tests-ascend (linux-aarch64-a3-800i-4, py3.10)",
+      "startedAt": "2026-11-03T01:05:05Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Integration Tests"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557292068/job/125659207397",
+      "name": "integration-tests-ascend / integration-tests-ascend (linux-aarch64-a3-800i-4, py3.11)",
+      "startedAt": "2026-11-03T01:05:08Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Integration Tests"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/triton-lang/triton-ascend/actions/runs/41557292068/job/125659207481",
+      "name": "integration-tests-ascend / integration-tests-ascend (linux-amd64-a5-2, py3.12)",
+      "startedAt": "2026-11-03T01:04:53Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Integration Tests"
+    },
+    {
+      "__typename": "StatusContext",
+      "context": "docs/readthedocs",
+      "startedAt": "2026-11-03T01:06:39Z",
+      "state": "SUCCESS",
+      "targetUrl": "https://triton-ascend--2940.org.readthedocs.build/"
+    }
+  ],
+  "title": "[TLA](feat) Add scalar reads, byte views and strided DMA",
+  "url": "https://github.com/triton-lang/triton-ascend/pull/2940",
+  "checked_at_utc": "2026-11-03T01:11:17.130396+00:00",
+  "expected_head": "4a96387550889968145e01e2a66fab99f5cf9341",
+  "head_matches_expected": true,
+  "review_mode": "read_only; no review/comments submitted; no product changes",
+  "local_validation": {
+    "tests_passed": 121,
+    "device_input_sets": 28,
+    "precision": "exact equality for interface UTs",
+    "public_dsa_cases_passed": [
+      "decode_b1",
+      "decode_b8",
+      "decode_tp8",
+      "prefill_tp8"
+    ],
+    "public_boundary_cases_passed": 4,
+    "end_to_end_performance_claim": false
+  },
+  "ci_precommit": {
+    "run_id": 41557291878,
+    "command": "python3 -m pre_commit run --all-files --verbose",
+    "scope": "entire repository",
+    "synthetic_merge": "db1dfaa",
+    "merge_head": "4a96387550889968145e01e2a66fab99f5cf9341",
+    "merge_base": "0ee9f1a3d5e91807aba88d84f124628eff52acd5",
+    "conclusion": "SUCCESS"
+  },
+  "patch": {
+    "path": "compiler/0001-tla-dsa-memory-apis.patch",
+    "sha256": "26c9425914ad552c601ac213cefc6466e4733c2477f20b8d20f0ee53b9353b41"
+  }
+}

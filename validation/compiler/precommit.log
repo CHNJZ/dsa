@@ -1,0 +1,18 @@
+check for broken symlinks............................(no files to check)Skipped
+detect destroyed symlinks................................................Passed
+trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+check yaml...........................................(no files to check)Skipped
+check toml...........................................(no files to check)Skipped
+check python ast.........................................................Passed
+check for added large files..............................................Passed
+check for merge conflicts................................................Passed
+check that executables have shebangs.................(no files to check)Skipped
+check that scripts with shebangs are executable..........................Passed
+detect private key.......................................................Passed
+debug statements (python)................................................Passed
+ruff.................................................(no files to check)Skipped
+yapf.....................................................................Passed
+clang-format.............................................................Passed
+mypy.....................................................................Passed
+Expand YAML anchors..................................(no files to check)Skipped

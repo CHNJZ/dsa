@@ -1,0 +1,13 @@
+docs/en/triton_api_extension/tla/memory.md
+third_party/ascend/language/tla/__init__.py
+third_party/ascend/language/tla/builder.py
+third_party/ascend/language/tla/core.py
+third_party/ascend/language/tla/cpp/tla_builder.cc
+third_party/ascend/language/tla/dma.py
+third_party/ascend/language/tla/scalar.py
+third_party/ascend/language/tla/view.py
+third_party/ascend/unittest/tla_ut/README.md
+third_party/ascend/unittest/tla_ut/dma/strided_load.py
+third_party/ascend/unittest/tla_ut/memory_frontend_contract.py
+third_party/ascend/unittest/tla_ut/vector/byte_view.py
+third_party/ascend/unittest/tla_ut/vector/scalar_load.py

@@ -1,0 +1,63 @@
+....[W1102 21:51:43.538339363 op_api_common.cpp:47] Warning: The /usr/local/Ascend/cann-9.1.0/opp/vendors/custom_transformer/op_api/lib/libcust_opapi.so owner does not match current owner or the root user is using the files of a common user, will skip this file. (function operator())
+COMPILE PASS: scalar_read_after_vector_write -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/AL7BAEL6V2D7GSLJTCDNLPZGJXKK3QBCMXBAJ4HV7TRJJYFW6QLQ/scalar_read_after_vector_write.npubin
+.COMPILE PASS: scalar_read_after_vector_write -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/S5CSFDSCHAD65DS6EW2KHESABMHUM2AP2GXV5VYWOQADFRF3C3DA/scalar_read_after_vector_write.npubin
+.COMPILE PASS: scalar_read_after_vector_write -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/CBLW2MGTBMTEHV77P2HI2Y7JHW6PZQKIQNEIBMMUSUMURECEBWNQ/scalar_read_after_vector_write.npubin
+.COMPILE PASS: scalar_read_after_vector_write -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/HIZZOEC4U6KH26IQTSNO6TO6RNTEVOHY4AAGT3LDA7UGKCHOC4DQ/scalar_read_after_vector_write.npubin
+.ACCURACY PASS: scalar_load direct seed 7 exact match
+ACCURACY PASS: scalar_load direct seed 19 exact match
+.ACCURACY PASS: scalar_load linear seed 7 exact match
+ACCURACY PASS: scalar_load linear seed 19 exact match
+.ACCURACY PASS: scalar_load strided seed 7 exact match
+ACCURACY PASS: scalar_load strided seed 19 exact match
+.ACCURACY PASS: scalar_load matrix seed 7 exact match
+ACCURACY PASS: scalar_load matrix seed 19 exact match
+...COMPILE PASS: overlapping_byte_views -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/VIVC7GPVZO2N5HINBNDKQ4WMVCERL7NLD7CGCMUQMWWB7FFGYN2Q/overlapping_byte_views.npubin
+.COMPILE PASS: overlapping_byte_views -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/34UTLPTBVY7S5EAJROI5B5PNG2MIVITHVE26Y45A3DGNLJ6NR6PA/overlapping_byte_views.npubin
+.ACCURACY PASS: byte_view offset_0 seed 7 exact values and guards
+ACCURACY PASS: byte_view offset_0 seed 19 exact values and guards
+.ACCURACY PASS: byte_view offset_128 seed 7 exact values and guards
+ACCURACY PASS: byte_view offset_128 seed 19 exact values and guards
+.......COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/HKBUSMICTKYEOP3RFZ7JO4TVCLUWHHYGFUHIK54YS4VGY2NTXZ4A/copy_strided_rows.npubin
+.COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/BVFPTSDUVBKJA4752D2A2ODFQMI3K6NM3V2UEIX6JF4Y6VMEBK2A/copy_strided_rows.npubin
+.COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/BHVIT4MVXNZZZX3ICTXWQSVQT5UWEBCFZRVE74IPZN3OSXFYKZ3A/copy_strided_rows.npubin
+.COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/2FD5T2TWYH7RJTYYKIIDH3VLNN55RIJXG2E4F4UTCIKFKAUZVSUA/copy_strided_rows.npubin
+.COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/6FFULLDAVNQSQZ3B3GVRKSXPLH6YVQWV32RNTMD5UH6742QM264A/copy_strided_rows.npubin
+.COMPILE PASS: copy_strided_rows -> /home/l00898962/experiments/dsa-review-20261102/cache-native-ut/GB27HA3W5FN4E4CZ7ROSVEDGFPLYLPUYOF6TUIMTKQDMKN3RCB3Q/copy_strided_rows.npubin
+.ACCURACY PASS: strided_load fp16_static seed 7 exact rows and guards
+ACCURACY PASS: strided_load fp16_static seed 19 exact rows and guards
+.ACCURACY PASS: strided_load fp16_dynamic seed 7 exact rows and guards
+ACCURACY PASS: strided_load fp16_dynamic seed 19 exact rows and guards
+.ACCURACY PASS: strided_load fp16_wide seed 7 exact rows and guards
+ACCURACY PASS: strided_load fp16_wide seed 19 exact rows and guards
+.ACCURACY PASS: strided_load bf16_static seed 7 exact rows and guards
+ACCURACY PASS: strided_load bf16_static seed 19 exact rows and guards
+.ACCURACY PASS: strided_load bf16_dynamic seed 7 exact rows and guards
+ACCURACY PASS: strided_load bf16_dynamic seed 19 exact rows and guards
+.ACCURACY PASS: strided_load bf16_wide seed 7 exact rows and guards
+ACCURACY PASS: strided_load bf16_wide seed 19 exact rows and guards
+................................................................................
+=============================== warnings summary ===============================
+build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:13
+  /home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:13: FutureWarning: triton.language.extra.cann.extension.atan2 is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.atan2 instead.
+    @_deprecated(replacement="triton.language.extra.cann.libdevice.atan2")
+
+build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:35
+  /home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:35: FutureWarning: triton.language.extra.cann.extension.isfinited is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.isfinited instead.
+    @_deprecated(replacement="triton.language.extra.cann.libdevice.isfinited")
+
+build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:49
+  /home/l00898962/experiments/tla-mmad-subview-20261102/build-src/build/lib.linux-x86_64-cpython-311/triton/language/extra/cann/extension/math_ops.py:49: FutureWarning: triton.language.extra.cann.extension.finitef is deprecated and will be removed in the next release; use triton.language.extra.cann.libdevice.finitef instead.
+    @_deprecated(replacement="triton.language.extra.cann.libdevice.finitef")
+
+../../../.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58
+../../../.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58
+  /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0 owner does not match the current owner.
+    warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+
+../../../.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58
+../../../.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58
+  /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-9.1.0/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+    warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+115 passed, 7 warnings in 49.82s

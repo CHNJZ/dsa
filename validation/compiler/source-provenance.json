@@ -1,0 +1,12 @@
+{
+  "tested_implementation_commit": "4a96387550889968145e01e2a66fab99f5cf9341",
+  "delivery_head": "564a1e5b014adbc91b533c81dc699ec4425c1c99",
+  "subsequent_change": "documentation-only: README line 7 npuir -> NPU-IR",
+  "changed_paths_after_device_validation": [
+    "third_party/ascend/unittest/tla_ut/README.md"
+  ],
+  "device_test_manifest": "source.sha256",
+  "delivery_manifest": "final-source.sha256",
+  "product_and_test_code_changed": false,
+  "patch_commit_count": 2
+}

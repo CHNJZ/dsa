@@ -1,0 +1,908 @@
+{
+  "case": "decode_b1",
+  "shape": [
+    1,
+    1,
+    128,
+    8192,
+    2048
+  ],
+  "seed": 20261102,
+  "family": "normal",
+  "mode": "timing",
+  "api_mode": "legacy",
+  "physical_device": "1",
+  "torch": "2.7.1+cpu",
+  "torch_npu": "2.7.1.post7.dev20260707",
+  "triton": "3.6.0",
+  "triton_path": "/home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/__init__.py",
+  "config": {
+    "module": "dsa_kernel_ragged",
+    "bm": 64,
+    "bn": 64,
+    "split": 14
+  },
+  "original_kernels": [
+    {
+      "name": "sparse_mla_kernel",
+      "binary_sha256": "aba868176fc9fa587e93beec36536b1531e5fd5f959a0a983df91438e8a728a0",
+      "executable_sections": {
+        ".text": "6dcab90e5a59df121fcd2248a4c6ad8a66c61d820df687dae2d33741aea5c6cf"
+      },
+      "normalized_adapter_sha256": "3692f6b878e04fcb40f4e7163ce48dfe8023c8e63bc586944ce49c2c419fb56a",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='3eb1eb83d1f7b8492a4291a426bca9d5e4cb02b4d60cf6d181496fe362e126b4', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='sparse_mla_kernel', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='mix', multibuffer=True, multibuffer_mode=None, name='sparse_mla_kernel', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    },
+    {
+      "name": "merge_partials",
+      "binary_sha256": "52c3d5af5dc0c8d5a57250052a150228c0c4d115b61efce36d04fb11b7ff52c1",
+      "executable_sections": {
+        ".text": "d45faa8f961231b418c7a08716c4c5d0372ff17b07cd5c9f3fbb265410b5c1b4"
+      },
+      "normalized_adapter_sha256": "8b45a6a7fdc3985ba2ef8f353cfcab2d0c45fdbe0f3a0d817dec7c6fda69c5b8",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='c08593f222c1d3b6f447ae7688dacdb84dfd46a44e3f1119292c0e656140d6a4', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='merge_partials', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='aiv', multibuffer=True, multibuffer_mode=None, name='merge_partials', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    }
+  ],
+  "refactored_kernels": [
+    {
+      "name": "ragged_attention",
+      "binary_sha256": "36b125c864d1a17c60e8d526ef5e361415d5f10b22dc8abefd94fb04456ed828",
+      "executable_sections": {
+        ".text": "6dcab90e5a59df121fcd2248a4c6ad8a66c61d820df687dae2d33741aea5c6cf"
+      },
+      "normalized_adapter_sha256": "3692f6b878e04fcb40f4e7163ce48dfe8023c8e63bc586944ce49c2c419fb56a",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='8c9263480f6d33f0094add7b5cfa77bc726946efaa54e939012a85e84cdb9e97', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='ragged_attention', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='mix', multibuffer=True, multibuffer_mode=None, name='ragged_attention', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    },
+    {
+      "name": "merge_partials",
+      "binary_sha256": "52c3d5af5dc0c8d5a57250052a150228c0c4d115b61efce36d04fb11b7ff52c1",
+      "executable_sections": {
+        ".text": "d45faa8f961231b418c7a08716c4c5d0372ff17b07cd5c9f3fbb265410b5c1b4"
+      },
+      "normalized_adapter_sha256": "8b45a6a7fdc3985ba2ef8f353cfcab2d0c45fdbe0f3a0d817dec7c6fda69c5b8",
+      "metadata": "KernelMetadata(add_auto_scheduling=False, allow_fp8e4nv=False, allowed_dot_input_precisions=['ieee', 'hf32'], arch='Ascend950PR_9579', auto_blockify_enabled=True, auto_blockify_size=1, auto_tile_and_bind_subblock=True, auto_vectorize_v2_max_fused_ops_num=None, backend_name='cann', bisheng_options='-cce-link-aicore-ll-module /home/l00898962/.conda/envs/lpc/lib/python3.11/site-packages/triton/backends/ascend/lib/libdevice.10.bc', bitcodes=[], buf_slot_num_of_crosscore=None, buf_slot_num_of_gm=None, buf_slot_num_of_veccore=None, cluster_dims=[1, 1, 1], coalesce_axis=-1, coalesce_factor=1, coalesce_grid_ceil_div=False, code_motion=None, compile_mode='simd_simt_template', compile_on_910_95=True, debug=False, default_dot_input_precision='ieee', deprecated_fp8_dot_operand_dtypes=[], deprecated_fp8_dtypes=[], disable_auto_inject_block_sync=None, disable_fma=False, disable_size_align_for_cast=None, disable_tightly_coupled_buffer_reuse=False, enable_auto_bind_sub_block=False, enable_auto_blockify=None, enable_auto_vectorize_v2=None, enable_bishengir_simt_optimization=0, enable_buffer_insert_optimization=True, enable_cce_vf_auto_sync=None, enable_cce_vf_remove_membar=None, enable_cross_if_fusion=False, enable_cube_block_merge=False, enable_drop_unit_dims=None, enable_dynamic_cv_pipeline=False, enable_flatten=None, enable_fp_fusion=True, enable_graph_optimize=True, enable_hivm_auto_cv_balance=None, enable_hivm_batch_matmul=False, enable_linearize=None, enable_mask_fallback_conversion=False, enable_mixed_cv=None, enable_nd2nz_on_vector=False, enable_persistent=False, enable_preload=False, enable_select_analysis=True, enable_simt_reorder_instruction=False, enable_sync_block_lock=None, enable_tla_mode=False, enable_ub_refine_opt=False, enable_ubuf_saving=None, enable_vf_fusion=None, enable_vf_stack_limit=False, enable_warp_specialization=False, extern_libs=None, force_simt_only=False, force_simt_template=False, graph_optimize_emit_remarks=False, graph_optimize_max_rewrites_per_function=64, graph_optimize_rule_mask=3071, graph_optimize_ub_capacity_bytes=None, grid_num_tiles=None, has_auto_blockify_blacklist_op=False, has_full_row_copy=False, has_unordered_sync_block_lock=False, hash='d7b7b1243561530e302bd0c9fd527f95e5a86f5dc4c83974bf5ce81cc949645e', hfusion_enable_multiple_consumer_fusion=None, inject_barrier_all=None, inject_block_all=None, instrumentation_mode='', inter_cache_num=None, intra_cache_num=None, ir_override=None, is_pure_simt=False, kernel_name='merge_partials', launch_cooperative_grid=False, limit_auto_multi_buffer_buffer=None, limit_auto_multi_buffer_of_local_buffer=None, limit_auto_multi_buffer_only_for_local_buffer=None, llvm_version=15, load_cache_num=None, max_num_imprecise_acc_default=0, mix_mode='aiv', multibuffer=True, multibuffer_mode=None, name='merge_partials', num_ctas=1, num_stages=2, num_warps=32, ops_reorder=None, optimize_dynamic_offset=False, optimize_epilogue=False, parallel_mode='simd', plan_memory_strategy=None, prevec_max_fused_ops_num=None, program_grid_mapping_applied=False, program_grid_transforms=None, ptsm_cap_authorized=False, required_ub_bits=0, row_coalescing_applied=False, sanitize_overflow=False, set_workspace_multibuffer=None, shared=1, shared_mem_dynamic_size=221184, simt_optimization_mode=0, simt_reorder_instruction=False, storage_align=None, stream=None, superblock_factor=1, supported_fp8_dtypes=['fp8e5', 'fp8e4b15', 'fp8e4nv', 'fp8e4b8', 'fp8e5b16'], sync_solver=None, target=GPUTarget(backend='npu', arch='Ascend950PR_9579', warp_size=0), target_arch='Ascend950PR_9579', tensor_kinds=[], tile_mix_cube_loop=None, tile_mix_vector_loop=None, triton_version='3.6.0', unit_flag=None, use_bytecode=False, vf_fusion_mode=None, vf_merge_level=1, warp_size=32)"
+    }
+  ],
+  "rounds": [
+    {
+      "id": 0,
+      "profiles": {
+        "original": {
+          "task_sum_us": [
+            26.026,
+            26.246,
+            26.593,
+            25.644,
+            25.612,
+            25.651,
+            26.286,
+            25.655,
+            25.491,
+            25.689,
+            25.821,
+            26.343999999999998,
+            25.857,
+            25.977999999999998,
+            25.433,
+            26.211,
+            25.523,
+            25.731,
+            25.778,
+            25.205000000000002
+          ],
+          "task_span_us": [
+            26.0,
+            26.25,
+            26.5,
+            25.75,
+            25.75,
+            25.5,
+            26.25,
+            25.5,
+            29.75,
+            27.75,
+            28.75,
+            26.25,
+            27.25,
+            26.0,
+            25.5,
+            26.25,
+            25.75,
+            25.75,
+            26.0,
+            25.25
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 17,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 82
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 18,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 84
+              }
+            }
+          ]
+        },
+        "ascendc": {
+          "task_sum_us": [
+            51.739,
+            51.589,
+            51.413,
+            52.41,
+            52.183,
+            51.544,
+            51.635,
+            52.828,
+            51.312,
+            51.508,
+            52.037,
+            51.42,
+            51.164,
+            52.091,
+            51.51,
+            51.545,
+            51.218,
+            51.761,
+            51.965,
+            51.472
+          ],
+          "task_span_us": [
+            51.75,
+            51.5,
+            51.5,
+            52.5,
+            52.25,
+            51.5,
+            51.75,
+            52.75,
+            51.25,
+            51.5,
+            52.0,
+            51.5,
+            51.25,
+            52.0,
+            51.5,
+            51.5,
+            51.25,
+            51.75,
+            52.0,
+            51.5
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 53,
+                "Task Id": 62,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 7
+              }
+            }
+          ]
+        },
+        "refactored": {
+          "task_sum_us": [
+            149.601,
+            132.22,
+            172.511,
+            174.072,
+            175.70999999999998,
+            174.769,
+            175.53199999999998,
+            177.317,
+            175.962,
+            176.12,
+            174.185,
+            174.689,
+            174.603,
+            175.49900000000002,
+            174.59199999999998,
+            174.675,
+            174.673,
+            175.351,
+            174.192,
+            175.652
+          ],
+          "task_span_us": [
+            149.75,
+            132.25,
+            172.5,
+            174.25,
+            175.5,
+            174.75,
+            175.5,
+            177.25,
+            176.0,
+            176.0,
+            174.5,
+            174.75,
+            174.75,
+            175.5,
+            174.5,
+            174.5,
+            174.75,
+            175.5,
+            174.25,
+            175.5
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "ragged_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 90,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 2
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 91,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 4
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          671.717,
+          181.422,
+          180.801,
+          234.231,
+          73.29,
+          73.441,
+          69.544,
+          72.218,
+          78.628,
+          71.347,
+          68.172,
+          70.135,
+          94.812,
+          184.937,
+          236.826,
+          79.129,
+          95.023,
+          104.917,
+          104.567,
+          86.47
+        ],
+        "ascendc": [
+          266.479,
+          212.388,
+          154.031,
+          157.176,
+          156.435,
+          94.081,
+          90.856,
+          90.996,
+          93.611,
+          90.866,
+          90.937,
+          95.112,
+          94.793,
+          98.397,
+          156.825,
+          87.531,
+          87.261,
+          100.791,
+          102.594,
+          101.823
+        ],
+        "refactored": [
+          293.991,
+          229.404,
+          179.008,
+          241.262,
+          84.426,
+          72.94,
+          77.025,
+          82.754,
+          112.829,
+          77.466,
+          71.167,
+          75.373,
+          95.243,
+          209.264,
+          186.46,
+          77.316,
+          71.077,
+          105.469,
+          104.056,
+          104.126
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "profiles": {
+        "ascendc": {
+          "task_sum_us": [
+            116.106,
+            108.971,
+            160.14,
+            109.012,
+            157.911,
+            107.958,
+            159.809,
+            109.766,
+            160.574,
+            108.845,
+            159.475,
+            110.012,
+            158.529,
+            109.116,
+            157.065,
+            109.896,
+            158.937,
+            106.752,
+            160.173,
+            108.887
+          ],
+          "task_span_us": [
+            116.0,
+            109.0,
+            160.25,
+            109.0,
+            158.0,
+            108.0,
+            159.75,
+            109.75,
+            160.5,
+            108.75,
+            159.5,
+            110.0,
+            158.5,
+            109.0,
+            157.0,
+            110.0,
+            159.0,
+            106.75,
+            160.25,
+            109.0
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 53,
+                "Task Id": 235,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 27
+              }
+            }
+          ]
+        },
+        "refactored": {
+          "task_sum_us": [
+            24.968999999999998,
+            25.512,
+            25.014,
+            25.254,
+            24.778,
+            24.910999999999998,
+            24.995,
+            25.456,
+            25.11,
+            25.203,
+            25.084,
+            24.991,
+            25.696,
+            25.320999999999998,
+            25.47,
+            24.989,
+            24.933,
+            25.276,
+            25.601,
+            24.746
+          ],
+          "task_span_us": [
+            27.75,
+            30.0,
+            25.0,
+            25.25,
+            25.0,
+            25.0,
+            25.0,
+            25.25,
+            25.0,
+            25.0,
+            25.0,
+            25.0,
+            25.75,
+            25.25,
+            25.25,
+            25.0,
+            25.0,
+            25.25,
+            31.0,
+            24.75
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "ragged_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 263,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 42
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 264,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 44
+              }
+            }
+          ]
+        },
+        "original": {
+          "task_sum_us": [
+            24.994,
+            25.391000000000002,
+            25.171,
+            25.216,
+            25.029,
+            25.775999999999996,
+            25.687,
+            25.473000000000003,
+            24.79,
+            24.928,
+            24.96,
+            25.256999999999998,
+            25.103,
+            25.403000000000002,
+            25.208,
+            24.81,
+            25.151000000000003,
+            25.145,
+            25.145,
+            25.155
+          ],
+          "task_span_us": [
+            25.0,
+            25.25,
+            25.0,
+            29.75,
+            25.25,
+            26.0,
+            36.75,
+            25.5,
+            25.25,
+            25.0,
+            25.0,
+            25.25,
+            25.25,
+            25.75,
+            25.25,
+            24.75,
+            25.0,
+            25.25,
+            25.25,
+            25.25
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 311,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 42
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 312,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 44
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          145.979,
+          141.493,
+          157.807,
+          143.966,
+          144.918,
+          160.521,
+          143.405,
+          144.757,
+          157.496,
+          141.743,
+          146.3,
+          162.294,
+          144.126,
+          147.321,
+          158.107,
+          146.489,
+          146.9,
+          161.402,
+          141.582,
+          143.485
+        ],
+        "ascendc": [
+          569.174,
+          160.521,
+          163.616,
+          163.035,
+          165.017,
+          163.054,
+          162.875,
+          161.462,
+          161.322,
+          163.275,
+          162.163,
+          165.408,
+          161.632,
+          166.76,
+          160.461,
+          167.281,
+          166.791,
+          165.008,
+          157.846,
+          167.301
+        ],
+        "refactored": [
+          564.376,
+          134.832,
+          158.768,
+          163.285,
+          146.159,
+          158.128,
+          160.501,
+          143.546,
+          160.23,
+          163.926,
+          143.325,
+          161.943,
+          161.883,
+          142.784,
+          160.781,
+          161.042,
+          143.895,
+          163.576,
+          160.04,
+          141.492
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "profiles": {
+        "refactored": {
+          "task_sum_us": [
+            165.064,
+            163.32,
+            162.68,
+            161.188,
+            162.151,
+            163.25,
+            163.757,
+            161.881,
+            162.279,
+            163.286,
+            162.277,
+            162.135,
+            161.059,
+            161.677,
+            160.991,
+            162.875,
+            161.106,
+            162.83800000000002,
+            162.311,
+            161.57999999999998
+          ],
+          "task_span_us": [
+            165.0,
+            163.5,
+            162.75,
+            161.0,
+            162.0,
+            163.25,
+            163.75,
+            162.0,
+            162.0,
+            163.25,
+            162.25,
+            162.0,
+            161.0,
+            161.75,
+            160.75,
+            162.75,
+            161.25,
+            163.0,
+            162.5,
+            161.5
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "ragged_attention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 459,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 2
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 460,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 4
+              }
+            }
+          ]
+        },
+        "original": {
+          "task_sum_us": [
+            90.759,
+            152.706,
+            155.748,
+            152.698,
+            151.99599999999998,
+            156.162,
+            154.491,
+            153.41,
+            154.29,
+            153.502,
+            153.07399999999998,
+            153.20999999999998,
+            153.065,
+            154.954,
+            154.007,
+            155.736,
+            155.548,
+            152.667,
+            154.00799999999998,
+            154.33100000000002
+          ],
+          "task_span_us": [
+            90.75,
+            152.75,
+            155.5,
+            152.75,
+            152.0,
+            156.0,
+            154.5,
+            153.5,
+            154.25,
+            153.5,
+            153.25,
+            153.25,
+            153.0,
+            155.0,
+            154.0,
+            155.75,
+            155.75,
+            152.5,
+            154.0,
+            154.5
+          ],
+          "tasks_per_call": 2,
+          "tasks": [
+            {
+              "name": "sparse_mla_kernel",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 507,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 42
+              }
+            },
+            {
+              "name": "merge_partials",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "AI_VECTOR_CORE",
+                "Physic Stream Id": 53,
+                "Task Id": 508,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 44
+              }
+            }
+          ]
+        },
+        "ascendc": {
+          "task_sum_us": [
+            51.872,
+            51.73,
+            52.155,
+            52.182,
+            51.761,
+            51.974,
+            50.93,
+            51.923,
+            52.746,
+            52.131,
+            51.465,
+            53.092,
+            52.874,
+            51.602,
+            51.793,
+            52.645,
+            51.863,
+            51.757,
+            52.277,
+            52.19
+          ],
+          "task_span_us": [
+            51.75,
+            51.75,
+            52.25,
+            52.25,
+            51.75,
+            52.0,
+            51.0,
+            52.0,
+            52.75,
+            52.25,
+            51.5,
+            53.0,
+            52.75,
+            51.5,
+            51.75,
+            52.75,
+            51.75,
+            51.75,
+            52.25,
+            52.25
+          ],
+          "tasks_per_call": 1,
+          "tasks": [
+            {
+              "name": "SparseFlashAttention",
+              "args": {
+                "Model Id": 4294967295,
+                "Task Type": "MIX_AIC",
+                "Physic Stream Id": 53,
+                "Task Id": 552,
+                "Batch Id": 0,
+                "Subtask Id": 4294967295,
+                "connection_id": 35
+              }
+            }
+          ]
+        }
+      },
+      "eager_us": {
+        "original": [
+          229.244,
+          134.762,
+          239.96,
+          268.984,
+          135.022,
+          235.603,
+          273.67,
+          127.722,
+          236.875,
+          263.526,
+          138.408,
+          233.019,
+          275.073,
+          134.903,
+          226.92,
+          268.633,
+          136.355,
+          233.501,
+          268.232,
+          135.263
+        ],
+        "ascendc": [
+          455.694,
+          159.419,
+          160.992,
+          200.461,
+          160.791,
+          160.09,
+          196.905,
+          164.246,
+          161.282,
+          197.356,
+          160.41,
+          164.036,
+          192.939,
+          163.395,
+          166.569,
+          199.9,
+          163.355,
+          167.441,
+          197.136,
+          161.893
+        ],
+        "refactored": [
+          675.914,
+          134.612,
+          135.533,
+          272.909,
+          135.543,
+          137.075,
+          269.434,
+          136.505,
+          134.993,
+          270.946,
+          135.273,
+          134.752,
+          270.375,
+          134.201,
+          139.96,
+          269.094,
+          134.492,
+          132.809,
+          271.698,
+          134.452
+        ]
+      }
+    }
+  ],
+  "passed": true
+}

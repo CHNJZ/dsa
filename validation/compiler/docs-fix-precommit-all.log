@@ -1,0 +1,59 @@
+check for broken symlinks................................................Passed
+- hook id: check-symlinks
+- duration: 0.02s
+detect destroyed symlinks................................................Passed
+- hook id: destroyed-symlinks
+- duration: 0.46s
+trim trailing whitespace.................................................Passed
+- hook id: trailing-whitespace
+- duration: 0.13s
+fix end of files.........................................................Passed
+- hook id: end-of-file-fixer
+- duration: 0.12s
+check yaml...............................................................Passed
+- hook id: check-yaml
+- duration: 0.05s
+check toml...............................................................Passed
+- hook id: check-toml
+- duration: 0.02s
+check python ast.........................................................Passed
+- hook id: check-ast
+- duration: 0.15s
+check for added large files..............................................Passed
+- hook id: check-added-large-files
+- duration: 0.14s
+check for merge conflicts................................................Passed
+- hook id: check-merge-conflict
+- duration: 0.14s
+check that executables have shebangs.....................................Passed
+- hook id: check-executables-have-shebangs
+- duration: 0.03s
+check that scripts with shebangs are executable..........................Passed
+- hook id: check-shebang-scripts-are-executable
+- duration: 0.15s
+detect private key.......................................................Passed
+- hook id: detect-private-key
+- duration: 0.13s
+debug statements (python)................................................Passed
+- hook id: debug-statements
+- duration: 0.17s
+ruff.....................................................................Passed
+- hook id: ruff
+- duration: 0.06s
+
+All checks passed!
+
+yapf.....................................................................Passed
+- hook id: yapf
+- duration: 4.67s
+clang-format.............................................................Passed
+- hook id: clang-format
+- duration: 0.29s
+mypy.....................................................................Passed
+- hook id: mypy
+- duration: 0.13s
+
+Success: no issues found in 7 source files
+
+Expand YAML anchors..................................(no files to check)Skipped
+- hook id: expand-yaml-anchors
