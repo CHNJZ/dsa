@@ -1,0 +1,98 @@
+{
+  "decode_b1": {
+    "module": "dsa_kernel_ragged",
+    "bm": 64,
+    "bn": 64,
+    "split": 14
+  },
+  "decode_b8": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 2
+  },
+  "decode_b32": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 4
+  },
+  "decode_tp8": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 16,
+    "bn": 128,
+    "split": 8
+  },
+  "prefill_q16": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 4
+  },
+  "prefill_q64": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 1
+  },
+  "prefill_tp8": {
+    "module": "dsa_kernel_bn256",
+    "bm": 16,
+    "bn": 256,
+    "split": 1
+  },
+  "prefill_k512": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 64,
+    "bn": 128,
+    "split": 1
+  },
+  "decode_b4_h128": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 8
+  },
+  "prefill_b4_h128": {
+    "module": "dsa_kernel_fastgather",
+    "bm": 128,
+    "bn": 128,
+    "split": 1
+  },
+  "decode_b4_h64": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 64,
+    "bn": 128,
+    "split": 8
+  },
+  "prefill_b4_h64": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 64,
+    "bn": 128,
+    "split": 1
+  },
+  "decode_b4_h32": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 32,
+    "bn": 128,
+    "split": 8
+  },
+  "prefill_b4_h32": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 32,
+    "bn": 128,
+    "split": 1
+  },
+  "decode_b4_h16": {
+    "module": "dsa_kernel_wide_fastgather",
+    "bm": 16,
+    "bn": 128,
+    "split": 8
+  },
+  "prefill_b4_h16": {
+    "module": "dsa_kernel_bn256",
+    "bm": 16,
+    "bn": 256,
+    "split": 1
+  }
+}

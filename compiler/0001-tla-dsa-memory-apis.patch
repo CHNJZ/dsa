@@ -1,0 +1,1263 @@
+From 4a96387550889968145e01e2a66fab99f5cf9341 Mon Sep 17 00:00:00 2001
+From: cxtjjcz <chenxiangting@huawei.com>
+Date: Mon, 2 Nov 2026 22:26:59 +0800
+Subject: [PATCH 1/2] [Triton][TLA] feat: Add sparse DMA memory interfaces
+
+Motivation: Sparse attention needs scalar UB reads, typed aliases and
+runtime-strided row transfers without private code-generator adaptations.
+
+Design: Add checked public APIs backed by native memref and HIVM builders.
+Preserve source offsets, destination pitch and visible storage aliases.
+Use static-capacity views with dynamic transfer subviews to support
+zero-offset pointer entries, and cover the interfaces with tla_ut.
+
+Risks: Dynamic bounds and manually scheduled buffer lifetimes remain the
+caller's responsibility. Target-specific DMA constraints still apply.
+
+Assisted-by: AI
+---
+ docs/en/triton_api_extension/tla/memory.md    | 101 +++++++
+ third_party/ascend/language/tla/__init__.py   |   7 +-
+ third_party/ascend/language/tla/builder.py    |   3 +
+ third_party/ascend/language/tla/core.py       |  13 +
+ .../ascend/language/tla/cpp/tla_builder.cc    | 111 ++++++++
+ third_party/ascend/language/tla/dma.py        |  50 +++-
+ third_party/ascend/language/tla/scalar.py     |  67 +++++
+ third_party/ascend/language/tla/view.py       |  35 ++-
+ third_party/ascend/unittest/tla_ut/README.md  |  20 ++
+ .../unittest/tla_ut/dma/strided_load.py       | 150 +++++++++++
+ .../tla_ut/memory_frontend_contract.py        | 249 ++++++++++++++++++
+ .../unittest/tla_ut/vector/byte_view.py       | 109 ++++++++
+ .../unittest/tla_ut/vector/scalar_load.py     | 115 ++++++++
+ 13 files changed, 1026 insertions(+), 4 deletions(-)
+ create mode 100644 docs/en/triton_api_extension/tla/memory.md
+ create mode 100644 third_party/ascend/language/tla/scalar.py
+ create mode 100644 third_party/ascend/unittest/tla_ut/dma/strided_load.py
+ create mode 100644 third_party/ascend/unittest/tla_ut/memory_frontend_contract.py
+ create mode 100644 third_party/ascend/unittest/tla_ut/vector/byte_view.py
+ create mode 100644 third_party/ascend/unittest/tla_ut/vector/scalar_load.py
+
+diff --git a/docs/en/triton_api_extension/tla/memory.md b/docs/en/triton_api_extension/tla/memory.md
+new file mode 100644
+index 000000000..e0c759b8d
+--- /dev/null
++++ b/docs/en/triton_api_extension/tla/memory.md
+@@ -0,0 +1,101 @@
++# Scalar reads, byte aliases and strided DMA
++
++Sparse attention gathers selected KV rows, reads UB index metadata in scalar
++control flow, and reuses temporary UB storage across non-overlapping stages.
++These interfaces express those operations directly through native builders;
++they do not parse MLIR strings or patch the Python code generator.
++
++## Read UB control data
++
++```python
++index = tla.scalar_load(indices, position)
++index = tla.scalar_load(indices_2d[row, column])
++```
++
++`scalar_load` reads one int32 UB element through `memref.load`. It accepts one
++Python integer or signed int32/int64 scalar tensor per dimension, preserving the source offset and strides.
++A single index is sufficient for a rank-one buffer. Use it in scalar control
++flow inside `tla.scope.vector()`, outside `tla.scope.simd()`.
++
++Static out-of-bounds indices are rejected. Runtime indices must be in bounds.
++The producer must complete before the read: a scalar load is not a barrier.
++Automatic synchronization can see this ordinary memory effect; manually
++managed pipelines remain responsible for their producer/consumer dependency.
++
++## Reuse byte-backed UB storage
++
++```python
++storage = tla.alloc((1024,), tl.int8, space="ub")
++fp32_tile = tla.byte_view(storage, (128,), tl.float32, byte_offset=128)
++bf16_tile = tla.byte_view(storage, (128,), tl.bfloat16, byte_offset=128)
++```
++
++`byte_view(src, shape, dtype, byte_offset=0)` emits `memref.view`, with no copy
++or numerical conversion. The source must be a zero-offset, contiguous,
++rank-one int8 UB buffer. Shape and byte offset are compile-time values. The
++range must fit the source and the byte offset must align to the result element
++size. Scalar integer/floating-point types with 8, 16, 32 or 64 bits are accepted;
++each consumer still imposes its backend dtype/alignment restrictions.
++
++Overlapping views alias the same storage. Complete prior reads before writing
++through a reused view. Memory planning and synchronization see the native
++alias relationship; this API makes no no-alias assertion.
++
++## Copy rows with runtime pitch and count
++
++```python
++# base is a rank-one, unit-stride GM view.
++# tile is a rank-two UB view with contiguous columns.
++tla.load_gm_to_ub_strided(base, tile, offset, row_stride, rows=count)
++```
++
++The transfer reads `count` rows of `tile.shape[1]` elements. `rows=None` selects
++all destination rows. Offset, row stride and row count can be Python integers
++fitting signed int64 or signed int32/int64 scalar tensors; offsets/strides are measured in elements. Unselected
++destination rows and padding remain untouched. The source and destination
++element types must match.
++
++Source offset is relative to the **current source view**, including existing
++entry/subview offsets. The implementation extracts and adds the source
++descriptor offset before constructing a `memref.reinterpret_cast`. The
++destination `memref.subview` preserves its existing pitch and offset.
++The source descriptor has static row capacity; a source subview expresses a
++runtime row count. This keeps pointer-entry lowering statically shaped. Only
++the requested rows are accessed, even if the unused capacity extends beyond
++the source allocation.
++
++Requirements:
++
++- Source: rank-one GM with unit stride.
++- Destination: rank-two UB, inner stride one, non-overlapping rows.
++- `offset >= 0`, `1 <= rows <= tile.shape[0]`, and
++  `row_stride >= tile.shape[1]`.
++- The full source range is in bounds; the native DMA backend additionally
++  checks target-specific alignment, dtype and transfer limits.
++
++Statically known violations are rejected. Runtime values remain the caller's
++responsibility; no runtime bounds checks are inserted. The interface emits
++ordinary memref views and one `hivm.hir.load`, with no allocation, index sorting,
++implicit gather, padding or additional synchronization.
++
++This scoped interface leaves the general TLA buffer type statically shaped.
++Runtime memref dimensions are confined to the transfer itself.
++
++## Validation
++
++Three-stage tests under `third_party/ascend/unittest/tla_ut/` cover:
++
++- `vector/scalar_load.py`: DMA/vector writes followed by scalar reads, including
++  strided/nonzero-offset aliases and multidimensional indices.
++- `vector/byte_view.py`: overlapping FP32/BF16 view lifetimes, exact typed
++  outputs, full backing bytes and untouched guards.
++- `dma/strided_load.py`: FP16/BF16 static and runtime row counts/pitches,
++  composed pointer/entry/subview offsets and pitched destination guards.
++  Zero-offset pointer-entry cases also check a one-row transfer at the end of
++  the source allocation with no valid second row.
++- `memory_frontend_contract.py`: host bounds/type/layout rejection and
++  forwarding contracts; these do not replace the real IR/device tests.
++
++Each device configuration runs two seeds with exact equality checks. See the
++[TLA test README](../../../../third_party/ascend/unittest/tla_ut/README.md) for
++explicit `TLA_TEST_STAGE=run` invocation and native build requirements.
+diff --git a/third_party/ascend/language/tla/__init__.py b/third_party/ascend/language/tla/__init__.py
+index 5d839a737..631ccccd3 100644
+--- a/third_party/ascend/language/tla/__init__.py
++++ b/third_party/ascend/language/tla/__init__.py
+@@ -56,6 +56,7 @@ from .dma import (
+     FixpipeL0C2L1Params,
+     FixpipeL0C2UBParams,
+     load_gm_to_ub,
++    load_gm_to_ub_strided,
+     store_ub_to_gm,
+     load_gm_to_l1,
+     copy_ub_to_l1,
+@@ -68,7 +69,8 @@ from .dma import (
+     copy_l0c_to_l1,
+     set_ctrl,
+ )
+-from .view import view, subview, reshape
++from .view import view, subview, reshape, byte_view
++from .scalar import scalar_load
+ from .aux_ops import annotate_buffer_versions
+ from . import math
+ from .math import compensated_rstd
+@@ -118,6 +120,7 @@ __all__ = [
+     "FixpipeL0C2L1Params",
+     "FixpipeL0C2UBParams",
+     "load_gm_to_ub",
++    "load_gm_to_ub_strided",
+     "store_ub_to_gm",
+     "load_gm_to_l1",
+     "copy_ub_to_l1",
+@@ -141,6 +144,8 @@ __all__ = [
+     "view",
+     "subview",
+     "reshape",
++    "byte_view",
++    "scalar_load",
+ 
+     # core-mode scopes (scope.simd / scope.cube)
+     "scope",
+diff --git a/third_party/ascend/language/tla/builder.py b/third_party/ascend/language/tla/builder.py
+index c1c786a02..4e4c1a020 100644
+--- a/third_party/ascend/language/tla/builder.py
++++ b/third_party/ascend/language/tla/builder.py
+@@ -60,6 +60,9 @@ def setup_unified_builder(main_builder, ascend_builder):
+         'create_tla_collapse_shape',
+         'create_tla_expand_shape',
+         'create_tla_load',
++        'create_tla_scalar_load',
++        'create_tla_byte_view',
++        'create_tla_load_strided',
+         'create_tla_store',
+         'create_tla_nd2nz',
+         'create_tla_copy',
+diff --git a/third_party/ascend/language/tla/core.py b/third_party/ascend/language/tla/core.py
+index 6d4b79e48..aae37b6ee 100644
+--- a/third_party/ascend/language/tla/core.py
++++ b/third_party/ascend/language/tla/core.py
+@@ -28,6 +28,19 @@ def _shape(values):
+     return values
+ 
+ 
++def _scalar_index(value):
++    """Indices use signed i32/i64 scalars so index_cast preserves their value."""
++    value = tl._unwrap_if_constexpr(value)
++    if isinstance(value, tl.tensor):
++        if value.shape or value.dtype not in (tl.int32, tl.int64):
++            raise TypeError("indices must be scalar integers with signed int32 or int64 dtype")
++    elif type(value) is not int:
++        raise TypeError("indices must be scalar integers")
++    elif not -(1 << 63) <= value < (1 << 63):
++        raise ValueError("constant indices must fit signed int64")
++    return value
++
++
+ def _row_major_strides(sizes):
+     strides, stride = [], 1
+     for size in reversed(sizes):
+diff --git a/third_party/ascend/language/tla/cpp/tla_builder.cc b/third_party/ascend/language/tla/cpp/tla_builder.cc
+index c1e316faa..6e74f9c3b 100644
+--- a/third_party/ascend/language/tla/cpp/tla_builder.cc
++++ b/third_party/ascend/language/tla/cpp/tla_builder.cc
+@@ -218,6 +218,79 @@ Value dmaIndexOperand(TLABuilder &self, Value value) {
+   return value;
+ }
+ 
++// Preserve static sizes/strides while accepting scalar runtime DMA operands.
++OpFoldResult mixedDmaIndex(TLABuilder &self, const py::object &value) {
++  if (py::isinstance<py::int_>(value) && !py::isinstance<py::bool_>(value))
++    return self.getBuilder().getIndexAttr(py::cast<int64_t>(value));
++  auto operand = py::cast<Value>(value);
++  if (!isa<IntegerType, IndexType>(operand.getType()))
++    throw std::invalid_argument("TLA DMA indices must be scalar integers");
++  return dmaIndexOperand(self, operand);
++}
++
++int64_t staticDmaIndex(OpFoldResult value) {
++  if (auto attr = dyn_cast<Attribute>(value))
++    return cast<IntegerAttr>(attr).getInt();
++  return ShapedType::kDynamic;
++}
++
++Value materializeDmaIndex(TLABuilder &self, OpFoldResult value) {
++  if (auto operand = dyn_cast<Value>(value))
++    return operand;
++  return self.create<arith::ConstantIndexOp>(staticDmaIndex(value));
++}
++
++void createStridedLoad(TLABuilder &self, Value src, Value dst,
++                       const py::object &offset, const py::object &rowStride,
++                       const py::object &rows) {
++  auto srcType = dyn_cast<MemRefType>(src.getType());
++  auto dstType = dyn_cast<MemRefType>(dst.getType());
++  if (!srcType || !dstType || srcType.getRank() != 1 ||
++      dstType.getRank() != 2 || !dstType.hasStaticShape() ||
++      srcType.getElementType() != dstType.getElementType())
++    throw std::invalid_argument(
++        "TLA strided load requires rank-one source and rank-two destination "
++        "with matching element types");
++  auto &builder = self.getBuilder();
++  auto count = mixedDmaIndex(self, rows);
++  auto stride = mixedDmaIndex(self, rowStride);
++  auto relativeOffset = materializeDmaIndex(self, mixedDmaIndex(self, offset));
++  // reinterpret_cast replaces the source descriptor offset rather than adding
++  // to it. Read and add that offset so a source subview keeps its address.
++  auto metadata = self.create<memref::ExtractStridedMetadataOp>(src);
++  auto absoluteOffset =
++      self.create<arith::AddIOp>(metadata.getOffset(), relativeOffset);
++  int64_t width = dstType.getDimSize(1);
++  int64_t capacity = staticDmaIndex(count);
++  bool dynamicCount = ShapedType::isDynamic(capacity);
++  if (dynamicCount)
++    capacity = dstType.getDimSize(0);
++  // Pointer-entry descriptors require static shapes during Triton-to-Linalg
++  // conversion. Keep the capacity static and express the active row count
++  // with a subview, just as the destination does. Only the subview is loaded.
++  auto sourceType = MemRefType::get(
++      {capacity, width}, srcType.getElementType(),
++      StridedLayoutAttr::get(builder.getContext(), ShapedType::kDynamic,
++                             {staticDmaIndex(stride), 1}),
++      srcType.getMemorySpace());
++  SmallVector<OpFoldResult> sizes{count, builder.getIndexAttr(width)};
++  SmallVector<OpFoldResult> capacitySizes{builder.getIndexAttr(capacity),
++                                          builder.getIndexAttr(width)};
++  SmallVector<OpFoldResult> strides{stride, builder.getIndexAttr(1)};
++  Value source = self.create<memref::ReinterpretCastOp>(
++      sourceType, src, OpFoldResult(absoluteOffset.getResult()), capacitySizes,
++      strides);
++  SmallVector<OpFoldResult> zeroOffsets(2, builder.getIndexAttr(0));
++  SmallVector<OpFoldResult> unitSteps(2, builder.getIndexAttr(1));
++  if (dynamicCount)
++    source =
++        self.create<memref::SubViewOp>(source, zeroOffsets, sizes, unitSteps);
++  auto destination =
++      self.create<memref::SubViewOp>(dst, zeroOffsets, sizes, unitSteps);
++  self.create<hivm::LoadOp>(TypeRange{}, source, destination.getResult(),
++                            hivm::PadModeAttr{}, Value{}, Value{}, Value{});
++}
++
+ // UnitFlag encoding belongs to native op construction. MMAD and Fixpipe
+ // share the backend enum mapping without exposing an attribute factory.
+ void setUnitFlagAttrs(OpBuilder &builder, Operation *op,
+@@ -979,6 +1052,41 @@ void init_tla_builder(py::module &&m) {
+                    "TLA alloc requires a static memref");
+              return self.create<memref::AllocOp>(memrefType).getResult();
+            })
++      .def("create_tla_scalar_load",
++           [](TLABuilder &self, Value source,
++              std::vector<Value> indices) -> Value {
++             auto type = dyn_cast<MemRefType>(source.getType());
++             if (!type || !type.getElementType().isInteger(32) ||
++                 indices.size() != type.getRank())
++               throw std::invalid_argument(
++                   "TLA scalar load requires an i32 memref and one index per "
++                   "dimension");
++             for (Value index : indices)
++               if (!isa<IntegerType, IndexType>(index.getType()))
++                 throw std::invalid_argument(
++                     "TLA scalar load indices must be scalar integers");
++             return self
++                 .create<memref::LoadOp>(source, toIndexValues(self, indices))
++                 .getResult();
++           })
++      .def("create_tla_byte_view",
++           [](TLABuilder &self, Value source, int64_t byteOffset,
++              Type resultType) -> Value {
++             auto srcType = dyn_cast<MemRefType>(source.getType());
++             auto dstType = dyn_cast<MemRefType>(resultType);
++             if (!srcType || !dstType || srcType.getRank() != 1 ||
++                 !srcType.getElementType().isInteger(8) ||
++                 !srcType.getLayout().isIdentity() ||
++                 !dstType.hasStaticShape() || byteOffset < 0 ||
++                 srcType.getMemorySpace() != dstType.getMemorySpace())
++               throw std::invalid_argument(
++                   "TLA byte view requires an identity-layout i8 source and a "
++                   "static result in the same memory space");
++             auto shift = self.create<arith::ConstantIndexOp>(byteOffset);
++             return self
++                 .create<memref::ViewOp>(dstType, source, shift, ValueRange{})
++                 .getResult();
++           })
+       .def("create_tla_bind",
+            [](TLABuilder &self, Value addr, Type type) -> Value {
+              auto memrefType = dyn_cast<MemRefType>(type);
+@@ -1048,6 +1156,9 @@ void init_tla_builder(py::module &&m) {
+       .def("create_tla_expand_shape", &createReshapeOp<memref::ExpandShapeOp>,
+            py::arg("source"), py::arg("result_type"), py::arg("reassociation"))
+       // Each explicit DMA binding materializes one native HIVM operation.
++      .def("create_tla_load_strided", &createStridedLoad, py::arg("src"),
++           py::arg("dst"), py::arg("offset"), py::arg("row_stride"),
++           py::arg("rows"))
+       .def(
+           "create_tla_load",
+           [](TLABuilder &self, Value src, Value dst, const py::dict &attrs,
+diff --git a/third_party/ascend/language/tla/dma.py b/third_party/ascend/language/tla/dma.py
+index f3e00e1ed..7a4d5bd24 100644
+--- a/third_party/ascend/language/tla/dma.py
++++ b/third_party/ascend/language/tla/dma.py
+@@ -8,8 +8,8 @@ Shape, dtype and hardware restrictions are checked by the backend verifier.
+ from dataclasses import dataclass
+ from enum import Enum, IntEnum
+ 
+-from triton.language.core import builtin, float32, _unwrap_if_constexpr
+-from .core import buffer
++from triton.language.core import builtin, float32, tensor, _unwrap_if_constexpr
++from .core import buffer, _scalar_index
+ 
+ 
+ class PadMode(Enum):
+@@ -442,6 +442,52 @@ def load_gm_to_ub(src, dst, params=None, _semantic=None):
+                                       right_padding_num=_scalar(p.right_padding_num, _semantic))
+ 
+ 
++@builtin
++def load_gm_to_ub_strided(src, dst, offset, row_stride, rows=None, _semantic=None):
++    """Load contiguous rows from a linear GM view using a runtime row pitch.
++
++    ``src`` is a rank-one, unit-stride GM buffer; ``dst`` is a rank-two UB
++    buffer with unit inner stride. Both have the same element type. The copy
++    writes ``rows`` rows and ``dst.shape[1]`` columns, leaving all other UB
++    elements untouched. ``rows=None`` selects all destination rows.
++
++    ``offset`` and ``row_stride`` are measured in elements relative to the
++    current source view. Source offset and destination offset/pitch are
++    preserved. Each argument may be a signed int32/int64 scalar tensor or a
++    Python integer fitting signed int64.
++    Statically known bounds are checked. At runtime, callers must ensure
++    ``0 <= offset``, ``1 <= rows <= dst.shape[0]``, row pitch at least the
++    copied width, and the full source range in bounds. The native DMA backend
++    checks target-specific dtype, alignment and transfer-size restrictions.
++
++    This emits ordinary memref views and one ``hivm.hir.load``. It does not
++    allocate memory, gather arbitrary indices, pad data or add a barrier.
++    """
++    _route(src, dst, (("gm", "ub"), ))
++    if src.dtype != dst.dtype:
++        raise TypeError("strided GM-to-UB load requires matching element types")
++    if len(src.shape) != 1 or src.strides != (1, ) or len(dst.shape) != 2 or dst.strides[1] != 1:
++        raise ValueError("strided GM-to-UB load requires unit-stride rank-one GM and row-contiguous rank-two UB")
++    width = dst.shape[1]
++    if dst.strides[0] < width:
++        raise ValueError("strided GM-to-UB destination rows must not overlap")
++    rows = dst.shape[0] if _unwrap_if_constexpr(rows) is None else rows
++    offset, row_stride, rows = (_scalar_index(x) for x in (offset, row_stride, rows))
++    if isinstance(offset, int) and offset < 0:
++        raise ValueError("strided GM-to-UB offset must be nonnegative")
++    if isinstance(row_stride, int) and row_stride < width:
++        raise ValueError("strided GM-to-UB row_stride must be at least the copied width")
++    if isinstance(rows, int) and not 1 <= rows <= dst.shape[0]:
++        raise ValueError("strided GM-to-UB rows must fit the destination")
++    if width > src.shape[0] or isinstance(offset, int) and offset + width > src.shape[0]:
++        raise ValueError("strided GM-to-UB load exceeds the source view")
++    if all(isinstance(x, int) for x in (offset, row_stride, rows)):
++        if offset + (rows - 1) * row_stride + width > src.shape[0]:
++            raise ValueError("strided GM-to-UB load exceeds the source view")
++    mixed = [x.handle if isinstance(x, tensor) else x for x in (offset, row_stride, rows)]
++    _semantic.builder.create_tla_load_strided(src.handle, dst.handle, *mixed)
++
++
+ @builtin
+ def store_ub_to_gm(src, dst, params=None, _semantic=None):
+     """Stores UB data to global memory using ``hivm.hir.store``.
+diff --git a/third_party/ascend/language/tla/scalar.py b/third_party/ascend/language/tla/scalar.py
+new file mode 100644
+index 000000000..b00dc6579
+--- /dev/null
++++ b/third_party/ascend/language/tla/scalar.py
+@@ -0,0 +1,67 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2025. All rights reserved.
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++"""Scalar reads of local-memory values used by control flow and DMA addresses."""
++from triton.language.core import builtin, int32, int64, tensor, _unwrap_if_constexpr
++from .core import buffer, buffer_access, _scalar_index
++
++
++@builtin
++def scalar_load(src, indices=None, _semantic=None):
++    """Read one int32 UB element into a scalar through ``memref.load``.
++
++    Use this in scalar control flow inside ``tla.scope.vector()``. It is not
++    a SIMD register load. ``indices`` contains one scalar integer per source
++    dimension (Python integers or signed int32/int64 tensors); a single integer is accepted for a rank-one source. The
++    ``scalar_load(src[i, ...])`` spelling is equivalent.
++
++    Source offsets and strides are preserved. Static out-of-bounds indices
++    are rejected; runtime indices must be in bounds. This is an ordinary
++    memory read, not a barrier: the producer must have completed before it.
++    The compiler can infer its UB memory dependency with automatic sync;
++    explicitly managed pipelines remain responsible for that dependency.
++    """
++    if isinstance(src, buffer_access):
++        if indices is not None:
++            raise TypeError("scalar_load indices must not be specified twice")
++        src, indices = src.buffer, src.indices
++    if not isinstance(src, buffer) or src.space != "ub" or src.dtype != int32:
++        raise TypeError("scalar_load expects an int32 UB buffer")
++    indices = _unwrap_if_constexpr(indices)
++    if isinstance(indices, (int, tensor)):
++        indices = (indices, )
++    if indices is not None:
++        try:
++            indices = tuple(indices)
++        except TypeError as error:
++            raise TypeError("indices must be scalar integers or a sequence of indices") from error
++    if indices is None or len(indices) != len(src.shape):
++        raise ValueError("scalar_load needs one index per source dimension")
++    handles = []
++    for index, extent in zip(indices, src.shape):
++        index = _scalar_index(index)
++        if isinstance(index, int) and not 0 <= index < extent:
++            raise ValueError("scalar_load index is outside the source buffer")
++        value = _semantic.to_tensor(index)
++        # Python integers in [2**31, 2**32) otherwise become unsigned i32.
++        if isinstance(index, int):
++            value = _semantic.cast(value, int64)
++        handles.append(value.handle)
++    handle = _semantic.builder.create_tla_scalar_load(src.handle, handles)
++    return tensor(handle, src.dtype)
+diff --git a/third_party/ascend/language/tla/view.py b/third_party/ascend/language/tla/view.py
+index acb7dc119..1f14b792e 100644
+--- a/third_party/ascend/language/tla/view.py
++++ b/third_party/ascend/language/tla/view.py
+@@ -32,7 +32,7 @@
+ 
+ ``space`` only applies to a pointer entry; a buffer's space is its own.
+ """
+-from triton.language.core import builtin, tensor, int64, _unwrap_if_constexpr
++from triton.language.core import builtin, tensor, dtype as _dtype, int8, int64, _unwrap_if_constexpr
+ from .core import buffer, buffer_type, _shape, _row_major_strides
+ 
+ 
+@@ -99,6 +99,39 @@ def _bind(src, ty, semantic):
+     return buffer(handle, ty)
+ 
+ 
++@builtin
++def byte_view(src, shape, dtype, byte_offset=0, _semantic=None):
++    """Create a typed, contiguous alias of a byte allocation via ``memref.view``.
++
++    ``src`` must be a zero-offset, contiguous rank-one int8 UB buffer. Shape,
++    element type and byte offset are compile-time values. The selected byte
++    range must fit in the source, and the offset must align to the result
++    element size. No data is copied or converted.
++
++    Overlapping views share storage. The caller must respect their lifetimes
++    and complete outstanding reads before overwriting the same bytes. The
++    native memref alias remains visible to memory and synchronization passes.
++    Individual consumers may impose stricter hardware alignment requirements.
++    """
++    if (not isinstance(src, buffer) or src.space != "ub" or src.dtype != int8 or len(src.shape) != 1
++            or src.strides != (1, ) or src.offset != 0):
++        raise TypeError("byte_view requires a zero-offset contiguous rank-one int8 UB buffer")
++    sizes = _shape(shape)
++    element_ty = _unwrap_if_constexpr(dtype)
++    if (not isinstance(element_ty, _dtype) or not (element_ty.is_int() or element_ty.is_floating())
++            or element_ty.primitive_bitwidth not in (8, 16, 32, 64)):
++        raise TypeError("byte_view requires a byte-addressable scalar integer or floating-point dtype")
++    byte_offset = _unwrap_if_constexpr(byte_offset)
++    element_bytes = element_ty.primitive_bitwidth // 8
++    if type(byte_offset) is not int or byte_offset < 0 or byte_offset % element_bytes:
++        raise ValueError("byte_view byte_offset must be a nonnegative compile-time multiple of the element size")
++    if byte_offset + _numel(sizes) * element_bytes > src.shape[0]:
++        raise ValueError("byte_view exceeds the source allocation")
++    ty = buffer_type(sizes, element_ty, src.space)
++    handle = _semantic.builder.create_tla_byte_view(src.handle, byte_offset, ty.to_ir(_semantic.builder))
++    return buffer(handle, ty)
++
++
+ @builtin
+ def subview(src, offsets, sizes, strides=None, _semantic=None):
+     """Alias a rank-preserving slice of a buffer without copying data.
+diff --git a/third_party/ascend/unittest/tla_ut/README.md b/third_party/ascend/unittest/tla_ut/README.md
+index 6cab319b4..425b150f4 100644
+--- a/third_party/ascend/unittest/tla_ut/README.md
++++ b/third_party/ascend/unittest/tla_ut/README.md
+@@ -58,3 +58,23 @@ Host-only SIMD contract tests do not need a build or NPU:
+ ```bash
+ pytest third_party/ascend/unittest/tla_ut -k simd_frontend
+ ```
++
++## Sparse-memory interfaces
++
++The [memory interface guide](../../../../docs/en/triton_api_extension/tla/memory.md)
++describes scalar UB reads, byte-backed typed aliases and runtime-strided DMA.
++With the rebuilt TLA frontend and native bindings, run:
++
++```bash
++TLA_TEST_STAGE=run python -m pytest -q -s \
++  third_party/ascend/unittest/tla_ut/vector/scalar_load.py \
++  third_party/ascend/unittest/tla_ut/vector/byte_view.py \
++  third_party/ascend/unittest/tla_ut/dma/strided_load.py \
++  third_party/ascend/unittest/tla_ut/memory_frontend_contract.py
++```
++
++Device cases check exact data and untouched guards, including overlapping
++view lifetimes, SIMD-to-scalar dependencies, dynamic row counts and composed
++source/destination offsets. Host rejection tests are separate from numerical
++validation. Existing `vector/subview.py`, `vector/reshape.py` and
++`dma/load_store.py` provide neighboring-interface regression coverage.
+diff --git a/third_party/ascend/unittest/tla_ut/dma/strided_load.py b/third_party/ascend/unittest/tla_ut/dma/strided_load.py
+new file mode 100644
+index 000000000..0957e5cfd
+--- /dev/null
++++ b/third_party/ascend/unittest/tla_ut/dma/strided_load.py
+@@ -0,0 +1,150 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2025. All rights reserved.
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++"""Runtime row pitch/count with nested source offsets and pitched UB guards."""
++import sys
++from functools import partial
++from pathlib import Path
++
++# Do not let dma/copy.py shadow Python's standard library in standalone runs.
++_CASE_DIR = Path(__file__).resolve().parent
++sys.path[:] = [p for p in sys.path if Path(p or ".").resolve() != _CASE_DIR]
++sys.path.insert(0, str(_CASE_DIR.parent))
++
++import torch
++import triton.language as tl
++import triton.language.extra.tla as tla
++
++from utils.tla_test_utils import compile_offline, lower_offline, check_kernel_binary, get_stages, matrix
++
++CONFIGS = [
++    dict(name=f"{dtype}_{mode}", dtype=dtype, mode=mode, width=512 if mode == "wide" else 64)
++    for dtype in ("fp16", "bf16")
++    for mode in ("static", "dynamic", "wide", "zero_base")
++]
++DTYPES = {"fp16": (tl.float16, torch.float16), "bf16": (tl.bfloat16, torch.bfloat16)}
++
++
++def constants(case):
++    return dict(DTYPE=DTYPES[case["dtype"]][0], WIDTH=case["width"], DYNAMIC=case["mode"] != "static",
++                ZERO_BASE=case["mode"] == "zero_base")
++
++
++def signature(case):
++    return dict(X="*" + case["dtype"], Initial="*" + case["dtype"], Backing="*" + case["dtype"], pointer_offset="i32",
++                entry_offset="i32", sub_offset="i32", offset="i32", stride="i32", rows="i32")
++
++
++@partial(tla.jit, do_not_specialize=["rows"])
++def copy_strided_rows(X, Initial, Backing, pointer_offset, entry_offset, sub_offset, offset, stride, rows,
++                      DTYPE: tl.constexpr, WIDTH: tl.constexpr, DYNAMIC: tl.constexpr, ZERO_BASE: tl.constexpr):
++    with tla.scope.vector():
++        storage = tla.alloc((4, WIDTH + 32), DTYPE, space="ub")
++        tla.load_gm_to_ub(tla.view(Initial, (4, WIDTH + 32)), storage)
++        tile = tla.subview(storage, (1, 16), (2, WIDTH))
++        # Each address layer contributes: pointer arithmetic, pointer-entry
++        # offset, subview offset, then the load's own relative offset.
++        if ZERO_BASE:
++            base = tla.view(X, (4096, ))
++        else:
++            entry = tla.view(X + pointer_offset, (6144, ), offsets=(entry_offset, ))
++            base = tla.subview(entry, (sub_offset, ), (4096, ))
++        if DYNAMIC:
++            tla.load_gm_to_ub_strided(base, tile, offset, stride, rows=rows)
++        else:
++            tla.load_gm_to_ub_strided(base, tile, 128, 192)
++        tla.store_ub_to_gm(storage, tla.view(Backing, (4, WIDTH + 32)))
++
++
++@matrix(CONFIGS)
++def test_ir(case, output_dir=None):
++    module, ctx = compile_offline(copy_strided_rows, signature(case), constants(case), output_dir=output_dir)
++    ast = str(module)
++    assert "memref.extract_strided_metadata" in ast
++    assert ast.count("memref.alloc()") == 1
++    assert "memref.subview" in ast and "memref.reinterpret_cast" in ast
++    if case["mode"] != "static":
++        # The GM entry has static capacity; runtime shape is a subview.
++        assert f"memref<2x{case['width']}x" in ast
++        assert f"memref<?x{case['width']}x" in ast
++        assert "strided<[?, 1], offset: ?>" in ast
++    text = str(lower_offline(module, ctx, output_dir=output_dir))
++    assert text.count("hivm.hir.load ") == 2
++    assert text.count("hivm.hir.store ") == 1
++    assert "__tla_native_" not in text and "!tt.ptr" not in text
++
++
++def _launch(case, seed=7, compile_only=False):
++    generator = torch.Generator().manual_seed(seed)
++    dtype = DTYPES[case["dtype"]][1]
++    width = case["width"]
++    source_size = 4096 if case["mode"] == "zero_base" else 8192
++    x = torch.randint(-127, 128, (source_size, ), generator=generator).to(dtype)
++    initial = torch.randint(-127, 128, (4, width + 32), generator=generator).to(dtype)
++    result = torch.full(initial.shape, float("nan"), dtype=dtype, device="npu")
++    pointer_offset, entry_offset, sub_offset = 32, 128, 64 if seed == 7 else 128
++    count = 1 if seed == 7 else 2
++    offset, stride = 128, width * (2 if seed == 7 else 3)
++    if case["mode"] == "zero_base" and count == 1:
++        # Only the requested first row is valid; a second read would be OOB.
++        offset = source_size - width
++    args = (x.npu(), initial.npu(), result, pointer_offset, entry_offset, sub_offset, offset, stride, count)
++    if compile_only:
++        return copy_strided_rows.warmup(*args, grid=(1, ), **constants(case)), None, None
++    kernel = copy_strided_rows[(1, )](*args, **constants(case))
++    # In particular rows=1 must not become a constexpr: both seeds exercise
++    # the same runtime-count DMA path, including the final valid source row.
++    assert kernel.src.signature["rows"] in ("i32", "i64")
++    torch.npu.synchronize()
++    if case["mode"] == "static":
++        count, stride = 2, 192
++    expected = initial.clone()
++    start = offset if case["mode"] == "zero_base" else pointer_offset + entry_offset + sub_offset + offset
++    for row in range(count):
++        expected[1 + row, 16:16 + width] = x[start + row * stride:start + row * stride + width]
++    return kernel, result.cpu(), expected
++
++
++@matrix(CONFIGS)
++def test_compile(case):
++    kernel, _, _ = _launch(case, compile_only=True)
++    check_kernel_binary(kernel)
++
++
++@matrix(CONFIGS)
++def test_run(case):
++    for seed in (7, 19):
++        _, actual, expected = _launch(case, seed)
++        assert torch.equal(actual, expected), "strided transfer lost offsets, pitch, count or untouched guards"
++        print("ACCURACY PASS: strided_load", case["name"], "seed", seed, "exact rows and guards")
++
++
++def main():
++    do_ir, do_compile, do_run = get_stages()
++    for case in CONFIGS:
++        if do_ir:
++            test_ir(case)
++        if do_compile:
++            test_compile(case)
++        if do_run:
++            test_run(case)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/third_party/ascend/unittest/tla_ut/memory_frontend_contract.py b/third_party/ascend/unittest/tla_ut/memory_frontend_contract.py
+new file mode 100644
+index 000000000..9fc2f810f
+--- /dev/null
++++ b/third_party/ascend/unittest/tla_ut/memory_frontend_contract.py
+@@ -0,0 +1,249 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2025. All rights reserved.
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++"""Frontend rejection and forwarding contracts; numerical tests are separate."""
++import importlib
++from pathlib import Path
++import sys
++import types
++
++import pytest
++import triton.language as tl
++
++TLA_DIR = Path(__file__).resolve().parents[2] / "language" / "tla"
++if "memory_tla_src" not in sys.modules:
++    package = types.ModuleType("memory_tla_src")
++    package.__path__ = [str(TLA_DIR)]
++    sys.modules["memory_tla_src"] = package
++core = importlib.import_module("memory_tla_src.core")
++view = importlib.import_module("memory_tla_src.view")
++scalar = importlib.import_module("memory_tla_src.scalar")
++dma = importlib.import_module("memory_tla_src.dma")
++
++
++class Recorder:
++
++    def __init__(self):
++        self.calls = []
++
++    def get_float_ty(self):
++        return "fp32"
++
++    def get_bf16_ty(self):
++        return "bf16"
++
++    def create_tla_buffer_type(self, shape, dtype, space, strides, offset):
++        return tuple(shape), dtype, space, tuple(strides), offset
++
++    def create_tla_byte_view(self, *args):
++        self.calls.append(("byte_view", args))
++        return object()
++
++    def create_tla_scalar_load(self, *args):
++        self.calls.append(("scalar_load", args))
++        return object()
++
++    def create_tla_load_strided(self, *args):
++        self.calls.append(("strided_load", args))
++
++
++class Semantic:
++
++    def __init__(self):
++        self.builder = Recorder()
++        self.casts = []
++
++    def cast(self, value, dtype):
++        assert dtype == tl.int64
++        self.casts.append((value.handle, dtype))
++        return value
++
++    def to_tensor(self, value):
++        return value if isinstance(value, tl.tensor) else types.SimpleNamespace(handle=("constant", value))
++
++
++def buf(shape=(1024, ), dtype=tl.int8, space="ub", strides=None, offset=0):
++    return core.buffer(object(), core.buffer_type(shape, dtype, space, strides, offset))
++
++
++@pytest.mark.parametrize("offset", [0, 128])
++@pytest.mark.parametrize("dtype", [tl.float32, tl.bfloat16])
++def test_byte_view_forwards_shared_storage(offset, dtype):
++    sem = Semantic()
++    source = buf()
++    result = view.byte_view(source, (8, 16), dtype, byte_offset=offset, _semantic=sem)
++    op, args = sem.builder.calls[0]
++    assert op == "byte_view" and args[:2] == (source.handle, offset)
++    assert result.shape == (8, 16) and result.strides == (16, 1)
++    assert result.dtype == dtype and result.space == source.space and result.offset == 0
++
++
++@pytest.mark.parametrize("source", [
++    buf(dtype=tl.float32),
++    buf(space="gm"),
++    buf((8, 128)),
++    buf(strides=(2, )),
++    buf(offset=16),
++    buf(offset=None),
++])
++def test_byte_view_rejects_non_base_storage(source):
++    with pytest.raises(TypeError, match="zero-offset contiguous"):
++        view.byte_view(source, (128, ), tl.float32, _semantic=Semantic())
++
++
++@pytest.mark.parametrize("offset", [-4, 2, True, 16.0, tl.tensor(object(), tl.int32)])
++def test_byte_view_offset_contract(offset):
++    with pytest.raises(ValueError, match="byte_offset"):
++        view.byte_view(buf(), (128, ), tl.float32, byte_offset=offset, _semantic=Semantic())
++
++
++@pytest.mark.parametrize("shape,offset", [((257, ), 0), ((128, ), 516)])
++def test_byte_view_rejects_capacity_overflow(shape, offset):
++    with pytest.raises(ValueError, match="exceeds"):
++        view.byte_view(buf(), shape, tl.float32, byte_offset=offset, _semantic=Semantic())
++
++
++def test_byte_view_rejects_sub_byte_dtype():
++    with pytest.raises(TypeError, match="byte-addressable"):
++        view.byte_view(buf(), (128, ), tl.int1, _semantic=Semantic())
++
++
++def test_scalar_load_preserves_source_view_and_runtime_index():
++    sem = Semantic()
++    source = buf((16, 16), tl.int32, strides=(32, 2), offset=128)
++    index = tl.tensor(object(), tl.int32)
++    result = scalar.scalar_load(source, (index, 3), _semantic=sem)
++    assert result.dtype == tl.int32
++    assert sem.builder.calls == [("scalar_load", (source.handle, [index.handle, ("constant", 3)]))]
++
++
++@pytest.mark.parametrize("index", [-1, 64, (0, 1)])
++def test_scalar_load_rejects_bad_rank_or_bounds(index):
++    with pytest.raises(ValueError):
++        scalar.scalar_load(buf((64, ), tl.int32), index, _semantic=Semantic())
++
++
++@pytest.mark.parametrize(
++    "index",
++    [True, (1.5, ), (tl.tensor(object(), tl.float32), ), (tl.tensor(object(), tl.block_type(tl.int32, [2])), )])
++def test_scalar_load_rejects_non_scalar_integer_indices(index):
++    with pytest.raises(TypeError, match="scalar integers"):
++        scalar.scalar_load(buf((64, ), tl.int32), index, _semantic=Semantic())
++
++
++@pytest.mark.parametrize("source", [buf((64, ), tl.float32), buf((64, ), tl.int32, "gm")])
++def test_scalar_load_rejects_unsupported_source(source):
++    with pytest.raises(TypeError, match="int32 UB"):
++        scalar.scalar_load(source, 0, _semantic=Semantic())
++
++
++def test_scalar_load_accepts_element_access():
++    sem = Semantic()
++    source = buf((64, ), tl.int32)
++    scalar.scalar_load(source[7], _semantic=sem)
++    assert sem.builder.calls == [("scalar_load", (source.handle, [("constant", 7)]))]
++    with pytest.raises(TypeError, match="twice"):
++        scalar.scalar_load(source[7], 0, _semantic=sem)
++
++
++def test_strided_load_forwards_runtime_values_and_aliased_handles():
++    sem = Semantic()
++    source = buf((4096, ), tl.bfloat16, "gm", offset=None)
++    destination = buf((2, 64), tl.bfloat16, strides=(96, 1), offset=None)
++    values = [tl.tensor(object(), tl.int32) for _ in range(3)]
++    dma.load_gm_to_ub_strided(source, destination, *values, _semantic=sem)
++    assert sem.builder.calls == [("strided_load", (source.handle, destination.handle, *(x.handle for x in values)))]
++
++
++def test_strided_load_default_copies_all_rows():
++    sem = Semantic()
++    source = buf((4096, ), tl.bfloat16, "gm")
++    destination = buf((4, 64), tl.bfloat16)
++    dma.load_gm_to_ub_strided(source, destination, 128, 256, _semantic=sem)
++    assert sem.builder.calls[0][1] == (source.handle, destination.handle, 128, 256, 4)
++
++
++@pytest.mark.parametrize("offset,stride,rows", [(-1, 64, 2), (0, 63, 2), (0, 64, 0), (0, 64, 3), (4000, 128, 2)])
++def test_strided_load_checks_static_bounds(offset, stride, rows):
++    sem = Semantic()
++    with pytest.raises(ValueError):
++        dma.load_gm_to_ub_strided(buf((4096, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16), offset, stride, rows,
++                                  _semantic=sem)
++    assert not sem.builder.calls
++
++
++@pytest.mark.parametrize("source,destination", [
++    (buf((4096, ), tl.bfloat16), buf((2, 64), tl.bfloat16)),
++    (buf((4096, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16, "l1")),
++    (buf((4096, ), tl.float16, "gm"), buf((2, 64), tl.bfloat16)),
++    (buf((64, 64), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16)),
++    (buf((4096, ), tl.bfloat16, "gm", strides=(2, )), buf((2, 64), tl.bfloat16)),
++    (buf((4096, ), tl.bfloat16, "gm"), buf((128, ), tl.bfloat16)),
++    (buf((4096, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16, strides=(128, 2))),
++    (buf((4096, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16, strides=(32, 1))),
++])
++def test_strided_load_rejects_unsupported_routes_and_layouts(source, destination):
++    with pytest.raises((TypeError, ValueError)):
++        dma.load_gm_to_ub_strided(source, destination, 0, 64, _semantic=Semantic())
++
++
++@pytest.mark.parametrize("dtype", [tl.int1, tl.int8, tl.int16, tl.uint8, tl.uint16, tl.uint32, tl.uint64])
++def test_scalar_load_rejects_unsigned_and_narrow_indices(dtype):
++    with pytest.raises(TypeError, match="signed int32 or int64"):
++        scalar.scalar_load(buf((256, ), tl.int32), tl.tensor(object(), dtype), _semantic=Semantic())
++
++
++@pytest.mark.parametrize("dtype", [tl.int1, tl.int8, tl.int16, tl.uint8, tl.uint16, tl.uint32, tl.uint64])
++@pytest.mark.parametrize("position", [0, 1, 2])
++def test_strided_load_rejects_unsigned_and_narrow_indices(dtype, position):
++    values = [0, 64, 2]
++    values[position] = tl.tensor(object(), dtype)
++    with pytest.raises(TypeError, match="signed int32 or int64"):
++        dma.load_gm_to_ub_strided(buf((4096, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16), *values,
++                                  _semantic=Semantic())
++
++
++@pytest.mark.parametrize("source_size,offset", [(32, tl.tensor(object(), tl.int32)), (4096, 4090)])
++def test_strided_load_checks_static_first_row_with_dynamic_dimensions(source_size, offset):
++    dynamic = tl.tensor(object(), tl.int64)
++    with pytest.raises(ValueError, match="exceeds the source"):
++        dma.load_gm_to_ub_strided(buf((source_size, ), tl.bfloat16, "gm"), buf((2, 64), tl.bfloat16), offset, dynamic,
++                                  dynamic, _semantic=Semantic())
++
++
++@pytest.mark.parametrize("dtype", [tl.int32, tl.int64])
++def test_scalar_load_accepts_signed_indices(dtype):
++    sem = Semantic()
++    index = tl.tensor(object(), dtype)
++    source = buf((256, ), tl.int32)
++    scalar.scalar_load(source, index, _semantic=sem)
++    assert sem.builder.calls[0][1] == (source.handle, [index.handle])
++
++
++def test_scalar_load_converts_large_constant_to_signed_int64():
++    sem = Semantic()
++    scalar.scalar_load(buf((1 << 33, ), tl.int32), 1 << 31, _semantic=sem)
++    assert sem.builder.calls[0][1][1] == [("constant", 1 << 31)]
++    assert sem.casts == [(("constant", 1 << 31), tl.int64)]
++
++
++@pytest.mark.parametrize("value", [-(1 << 63) - 1, 1 << 63])
++def test_index_constants_must_fit_int64(value):
++    with pytest.raises(ValueError, match="fit signed int64"):
++        core._scalar_index(value)
+diff --git a/third_party/ascend/unittest/tla_ut/vector/byte_view.py b/third_party/ascend/unittest/tla_ut/vector/byte_view.py
+new file mode 100644
+index 000000000..bcdcfa419
+--- /dev/null
++++ b/third_party/ascend/unittest/tla_ut/vector/byte_view.py
+@@ -0,0 +1,109 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2025. All rights reserved.
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++"""Overlapping typed UB views preserve storage identity and access ordering."""
++import sys
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++
++import torch
++import triton.language as tl
++import triton.language.extra.tla as tla
++
++from utils.tla_test_utils import compile_offline, lower_offline, check_kernel_binary, get_stages, matrix
++
++CONFIGS = [dict(name=f"offset_{offset}", offset=offset) for offset in (0, 128)]
++SIGNATURE = dict(Initial="*i8", X="*fp32", Y="*bf16", A="*fp32", B="*bf16", Backing="*i8")
++
++
++@tla.jit
++def overlapping_byte_views(Initial, X, Y, A, B, Backing, OFFSET: tl.constexpr):
++    with tla.scope.vector():
++        storage = tla.alloc((1024, ), tl.int8, space="ub")
++        first = tla.byte_view(storage, (128, ), tl.float32, byte_offset=OFFSET)
++        second = tla.byte_view(storage, (128, ), tl.bfloat16, byte_offset=OFFSET)
++        tla.load_gm_to_ub(tla.view(Initial, (1024, )), storage)
++        tla.load_gm_to_ub(tla.view(X, (128, )), first)
++        tla.store_ub_to_gm(first, tla.view(A, (128, )))
++        # Reuse the first half of the same bytes only after the previous read.
++        tla.load_gm_to_ub(tla.view(Y, (128, )), second)
++        tla.store_ub_to_gm(second, tla.view(B, (128, )))
++        tla.store_ub_to_gm(storage, tla.view(Backing, (1024, )))
++
++
++@matrix(CONFIGS)
++def test_ir(case, output_dir=None):
++    module, ctx = compile_offline(overlapping_byte_views, SIGNATURE, dict(OFFSET=case["offset"]), output_dir=output_dir)
++    ast = str(module)
++    assert ast.count("memref.view ") == 2
++    assert ast.count("memref.alloc()") == 1
++    text = str(lower_offline(module, ctx, output_dir=output_dir))
++    assert text.count("hivm.hir.load ") == text.count("hivm.hir.store ") == 3
++    assert "__tla_native_" not in text and "!tt.ptr" not in text
++
++
++def _launch(case, seed=7, compile_only=False):
++    generator = torch.Generator().manual_seed(seed)
++    initial = torch.randint(-128, 128, (1024, ), generator=generator, dtype=torch.int8)
++    x = torch.randn((128, ), generator=generator, dtype=torch.float32)
++    y = torch.randn((128, ), generator=generator).to(torch.bfloat16)
++    a = torch.full((128, ), float("nan"), dtype=torch.float32, device="npu")
++    b = torch.full((128, ), float("nan"), dtype=torch.bfloat16, device="npu")
++    backing = torch.empty((1024, ), dtype=torch.int8, device="npu")
++    args = (initial.npu(), x.npu(), y.npu(), a, b, backing)
++    if compile_only:
++        return overlapping_byte_views.warmup(*args, OFFSET=case["offset"], grid=(1, )), None, None
++    kernel = overlapping_byte_views[(1, )](*args, OFFSET=case["offset"])
++    torch.npu.synchronize()
++    expected = initial.clone()
++    start = case["offset"]
++    expected[start:start + 512] = x.view(torch.int8)
++    expected[start:start + 256] = y.view(torch.int8)
++    return kernel, (a.cpu(), b.cpu(), backing.cpu()), (x, y, expected)
++
++
++@matrix(CONFIGS)
++def test_compile(case):
++    kernel, _, _ = _launch(case, compile_only=True)
++    check_kernel_binary(kernel)
++
++
++@matrix(CONFIGS)
++def test_run(case):
++    for seed in (7, 19):
++        _, actual, expected = _launch(case, seed)
++        for result, reference in zip(actual, expected):
++            assert torch.equal(result, reference), "typed alias read or backing bytes differ"
++        print("ACCURACY PASS: byte_view", case["name"], "seed", seed, "exact values and guards")
++
++
++def main():
++    do_ir, do_compile, do_run = get_stages()
++    for case in CONFIGS:
++        if do_ir:
++            test_ir(case)
++        if do_compile:
++            test_compile(case)
++        if do_run:
++            test_run(case)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/third_party/ascend/unittest/tla_ut/vector/scalar_load.py b/third_party/ascend/unittest/tla_ut/vector/scalar_load.py
+new file mode 100644
+index 000000000..2011e22fb
+--- /dev/null
++++ b/third_party/ascend/unittest/tla_ut/vector/scalar_load.py
+@@ -0,0 +1,115 @@
++# Copyright (c) Huawei Technologies Co., Ltd. 2025. All rights reserved.
++#
++# Permission is hereby granted, free of charge, to any person obtaining a copy
++# of this software and associated documentation files (the "Software"), to deal
++# in the Software without restriction, including without limitation the rights
++# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++# copies of the Software, and to permit persons to whom the Software is
++# furnished to do so, subject to the following conditions:
++#
++# The above copyright notice and this permission notice shall be included in
++# all copies or substantial portions of the Software.
++#
++# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++# THE SOFTWARE.
++"""Native UB scalar reads after vector writes, including strided aliases."""
++import sys
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++
++import torch
++import triton.language as tl
++import triton.language.extra.tla as tla
++
++from utils.tla_test_utils import compile_offline, lower_offline, check_kernel_binary, get_stages, matrix
++
++CONFIGS = [dict(name=mode, mode=mode) for mode in ("direct", "linear", "strided", "matrix")]
++SIGNATURE = dict(X="*i32", O="*i32", row="i32", col="i32")
++
++
++@tla.jit
++def scalar_read_after_vector_write(X, O, row, col, MODE: tl.constexpr):
++    with tla.scope.vector():
++        src = tla.alloc((256, ), tl.int32, space="ub")
++        out = tla.alloc((64, ), tl.int32, space="ub")
++        tla.load_gm_to_ub(tla.view(X, (256, )), src)
++        if MODE != "direct":
++            with tla.scope.simd():
++                delta = tla.simd.vfull(17, tl.int32, 64)
++                for chunk in tl.static_range(4):
++                    value = tla.simd.vadd(tla.simd.vlds(src[chunk * 64]), delta)
++                    tla.simd.vsts(src[chunk * 64], value)
++        if MODE == "strided":
++            alias = tla.subview(src, (9, ), (64, ), (2, ))
++            value = tla.scalar_load(alias, row)
++        elif MODE == "matrix":
++            alias = tla.reshape(src, (16, 16))
++            value = tla.scalar_load(alias[row, col])
++        else:
++            value = tla.scalar_load(src, row)
++        with tla.scope.simd():
++            tla.simd.vsts(out[0], tla.simd.vdup(value, tl.int32))
++        tla.store_ub_to_gm(out, tla.view(O, (64, )))
++
++
++@matrix(CONFIGS)
++def test_ir(case, output_dir=None):
++    module, ctx = compile_offline(scalar_read_after_vector_write, SIGNATURE, dict(MODE=case["mode"]),
++                                  output_dir=output_dir)
++    assert str(module).count("memref.load ") == 1
++    text = str(lower_offline(module, ctx, output_dir=output_dir))
++    assert text.count("memref.load ") == 1
++    assert text.count("hivm.hir.load ") == text.count("hivm.hir.store ") == 1
++    assert "__tla_native_" not in text and "!tt.ptr" not in text
++
++
++def _launch(case, seed=7, compile_only=False):
++    generator = torch.Generator().manual_seed(seed)
++    x = torch.randint(-10000, 10000, (256, ), generator=generator, dtype=torch.int32)
++    row, col = (seed * 3) % 16, (seed * 5) % 16
++    inputs = x.npu()
++    out = torch.full((64, ), -123456789, dtype=torch.int32, device="npu")
++    args = (inputs, out, row, col)
++    if compile_only:
++        return scalar_read_after_vector_write.warmup(*args, MODE=case["mode"], grid=(1, )), None, None
++    kernel = scalar_read_after_vector_write[(1, )](*args, MODE=case["mode"])
++    torch.npu.synchronize()
++    index = row if case["mode"] in ("direct",
++                                    "linear") else 9 + row * 2 if case["mode"] == "strided" else row * 16 + col
++    expected = torch.full((64, ), x[index].item() + (0 if case["mode"] == "direct" else 17), dtype=torch.int32)
++    return kernel, out.cpu(), expected
++
++
++@matrix(CONFIGS)
++def test_compile(case):
++    kernel, _, _ = _launch(case, compile_only=True)
++    check_kernel_binary(kernel)
++
++
++@matrix(CONFIGS)
++def test_run(case):
++    for seed in (7, 19):
++        _, actual, expected = _launch(case, seed)
++        assert torch.equal(actual, expected), "scalar read lost an offset, stride or producer dependency"
++        print("ACCURACY PASS: scalar_load", case["name"], "seed", seed, "exact match")
++
++
++def main():
++    do_ir, do_compile, do_run = get_stages()
++    for case in CONFIGS:
++        if do_ir:
++            test_ir(case)
++        if do_compile:
++            test_compile(case)
++        if do_run:
++            test_run(case)
++
++
++if __name__ == "__main__":
++    main()
+-- 
+2.54.0 (Apple Git-157)
+
+
+From 564a1e5b014adbc91b533c81dc699ec4425c1c99 Mon Sep 17 00:00:00 2001
+From: cxtjjcz <chenxiangting@huawei.com>
+Date: Tue, 3 Nov 2026 09:27:01 +0800
+Subject: [PATCH 2/2] [Triton][TLA] doc: Clarify backend name in test guide
+
+Motivation: The docs gate flags an existing backend shorthand when this
+README is checked after adding the sparse-memory test instructions.
+Design: Use the official NPU-IR name without changing tests or code.
+Risks: None
+
+Assisted-by: AI
+---
+ third_party/ascend/unittest/tla_ut/README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/ascend/unittest/tla_ut/README.md b/third_party/ascend/unittest/tla_ut/README.md
+index 425b150f4..49b910fe6 100644
+--- a/third_party/ascend/unittest/tla_ut/README.md
++++ b/third_party/ascend/unittest/tla_ut/README.md
+@@ -4,7 +4,7 @@ Each case is one script with three stages selected by `TLA_TEST_STAGE`:
+ 
+ | Stage     | Verifies                                            | NPU needed |
+ |-----------|-----------------------------------------------------|------------|
+-| `ir`      | offline HIVM IR handed to npuir (structure asserts) | no         |
++| `ir`      | offline HIVM IR handed to NPU-IR (structure asserts) | no         |
+ | `compile` | `.o` / `.npubin` artifacts in `TRITON_CACHE_DIR`    | yes        |
+ | `run`     | device launch + accuracy                            | yes        |
+ 
+-- 
+2.54.0 (Apple Git-157)
+

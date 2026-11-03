@@ -1,0 +1,26 @@
+4a96387550889968145e01e2a66fab99f5cf9341
+[Triton][TLA] feat: Add sparse DMA memory interfaces
+
+Motivation: Sparse attention needs scalar UB reads, typed aliases and
+runtime-strided row transfers without private code-generator adaptations.
+
+Design: Add checked public APIs backed by native memref and HIVM builders.
+Preserve source offsets, destination pitch and visible storage aliases.
+Use static-capacity views with dynamic transfer subviews to support
+zero-offset pointer entries, and cover the interfaces with tla_ut.
+
+Risks: Dynamic bounds and manually scheduled buffer lifetimes remain the
+caller's responsibility. Target-specific DMA constraints still apply.
+
+Assisted-by: AI
+
+564a1e5b014adbc91b533c81dc699ec4425c1c99
+[Triton][TLA] doc: Clarify backend name in test guide
+
+Motivation: The docs gate flags an existing backend shorthand when this
+README is checked after adding the sparse-memory test instructions.
+Design: Use the official NPU-IR name without changing tests or code.
+Risks: None
+
+Assisted-by: AI
+
